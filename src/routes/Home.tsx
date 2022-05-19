@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import SpotifyWebApi from "spotify-web-api-js";
 import TextField from "@mui/material/TextField";
-import throttle from "lodash.throttle";
 import debounce from "lodash.debounce";
 
 function Home() {
   const [searchResults, setSearchResults] = useState({})
   const [searchError, setSearchError] = useState(false)
-  const [searchValue, setSearchValue] = useState("asd")
+  const [searchValue, setSearchValue] = useState("")
 
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
@@ -25,12 +24,11 @@ function Home() {
   }, 2000)
 
   var spotifyApi = new SpotifyWebApi();
-  const accessToken = 'BQBtswTBtmiGjD9sWr1oxKeC1VTgA3o5QaG2FYa9_LzKwoLOrfPbOjvD2fvifErDYQeXhX46lZtBOGMPjY4'
+  const accessToken = 'BQBnQgvDmUo9UW_-TK83lRYC7ZB8vaRXMcJ9unbiqHautJ5dgFzUIoNTVLf3OjlsZDXn9qW2qRevE7EnjR4'
   spotifyApi.setAccessToken(accessToken);
 
   return (
     <div>
-      <h1>Home</h1>
       <Link to="/artist">Artist</Link> | <Link to="/artist/album">Album</Link>
       <TextField id="outlined-basic" label="Search" variant="outlined" onChange={searchHandler} />
       <p>{searchValue}</p>

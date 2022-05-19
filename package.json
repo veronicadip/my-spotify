@@ -15,7 +15,6 @@
     "@types/react-dom": "^18.0.3",
     "buffer": "^6.0.3",
     "lodash.debounce": "^4.0.8",
-    "lodash.throttle": "^4.1.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
@@ -50,7 +49,6 @@
   },
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.7",
-    "@types/lodash.throttle": "^4.1.7",
     "request": "^2.88.2"
   }
 }
