@@ -6,6 +6,7 @@ import throttle from "lodash.throttle";
 import Album from "../components/Album";
 import { SearchResponse } from "spotify-web-api-ts/types/types/SpotifyResponses";
 import "../styles/Home.css";
+import Song from "../components/Song";
 
 function Home() {
   const [searchResults, setSearchResults] = useState<SearchResponse>({});
@@ -48,6 +49,12 @@ function Home() {
           variant="outlined"
           onChange={searchHandler}
         />
+        <h2>Songs</h2>
+        <div className="songsList">
+          {searchResults.tracks?.items.map((song) => (
+            <Song songData={song} key={song.id} />
+          ))}
+        </div>
         <h2>Albums</h2>
         <div className="albumsList">
           {searchResults.albums?.items.map((album) => (
