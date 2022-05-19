@@ -1,53 +1,60 @@
 import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import SpotifyWebApi from "spotify-web-api-js";
+import { SpotifyWebApi } from "spotify-web-api-ts";
 import TextField from "@mui/material/TextField";
 import throttle from "lodash.throttle";
+import Album from "../components/Album";
+import { SearchResponse } from "spotify-web-api-ts/types/types/SpotifyResponses";
+import "../styles/Home.css";
 
 function Home() {
-  const [searchResults, setSearchResults] = useState({});
+  const [searchResults, setSearchResults] = useState<SearchResponse>({});
   const [searchError, setSearchError] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
 
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setSearchValue(value);
     makeSearch(value);
   };
 
-  const makeSearch = throttle((query: string) => {
-    spotifyApi
-      .search(query, ["artist", "album", "track"])
-      .then((response) => {
-        setSearchResults(response);
-        console.log(response);
-      })
-      .catch(() => {
-        setSearchError(true);
-      });
-  }, 500);
-
-  const showResult = () => {
-    if (searchValue.length >= 1) {
-      return <p>Showing results of: {searchValue}</p>;
-    }
-  };
+  const makeSearch = throttle(
+    (query: string) => {
+      spotifyApi.search
+        .search(query, ["artist", "album", "track"], { limit: 5 })
+        .then((response) => {
+          setSearchResults(response);
+        })
+        .catch(() => {
+          setSearchError(true);
+        });
+    },
+    400,
+    { leading: false }
+  );
 
   var spotifyApi = new SpotifyWebApi();
   const accessToken =
-    "BQDhi1NNR6it36qiFAE6Lqf3qDvWCWOUm9FboNKE3xT2VH-b6hB67Hx7a3ukzK5ZO2QQDSjbqpbvHlHAqVU";
+    "BQAAmwxZtPeYAAweUbipO9T489f8xCBbdPXbYsIQdkIJusl-I-odYWpzAIXKCnFFi5uOPMX2gg8uDVcuRxA";
   spotifyApi.setAccessToken(accessToken);
 
   return (
     <div>
-      <Link to="/artist">Artist</Link> | <Link to="/artist/album">Album</Link>
-      <TextField
-        id="outlined-basic"
-        label="Search"
-        variant="outlined"
-        onChange={searchHandler}
-      />
-      {showResult()}
+      <div className="topOfPage">
+        <Link to="/artist">Artist</Link> | <Link to="/artist/album">Album</Link>
+      </div>
+      <div className="bodyOfPage">
+        <TextField
+          id="outlined-basic"
+          label="Search"
+          variant="outlined"
+          onChange={searchHandler}
+        />
+        <h2>Albums</h2>
+        <div className="albumsList">
+          {searchResults.albums?.items.map((album) => (
+            <Album albumData={album} key={album.id} />
+          ))}
+        </div>
+      </div>
       <Outlet />
     </div>
   );

@@ -1,0 +1,39 @@
+.topOfPage {
+  background-color: rgb(2, 10, 1);
+  padding: 20px;
+  margin-bottom: 20px;
+  color: rgb(245, 245, 245);
+}
+
+.bodyOfPage {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.albumsList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.albumContainer {
+  background-color: white;
+  padding: 10px;
+  margin: 15px;
+  width: 200px;
+}
+
+.albumContainer:hover {
+  background-color: rgb(32, 32, 32);
+  color: rgb(245, 245, 245);
+}
+.albumPicture {
+  width: 200px;
+}
+
+.albumName {
+  font-weight: bold;
+}
+
+.albumArtist {
+  font-size: small;
+}
