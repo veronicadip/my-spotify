@@ -2,36 +2,52 @@ import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import SpotifyWebApi from "spotify-web-api-js";
 import TextField from "@mui/material/TextField";
-import debounce from "lodash.debounce";
+import throttle from "lodash.throttle";
 
 function Home() {
-  const [searchResults, setSearchResults] = useState({})
-  const [searchError, setSearchError] = useState(false)
-  const [searchValue, setSearchValue] = useState("")
+  const [searchResults, setSearchResults] = useState({});
+  const [searchError, setSearchError] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-    makeSearch()
-  }
+    const value = event.target.value;
+    setSearchValue(value);
+    makeSearch(value);
+  };
 
-  const makeSearch = debounce(() => {
-    spotifyApi.search(searchValue, ["artist", "album", "track"]).then((response) => {
-      setSearchResults(response);
-      console.log(searchResults)
-    }).catch(() => {
-      setSearchError(true)
-    })
-  }, 2000)
+  const makeSearch = throttle((query: string) => {
+    spotifyApi
+      .search(query, ["artist", "album", "track"])
+      .then((response) => {
+        setSearchResults(response);
+        console.log(response);
+      })
+      .catch(() => {
+        setSearchError(true);
+      });
+  }, 500);
+
+  const showResult = () => {
+    if (searchValue.length >= 1) {
+      return <p>Showing results of: {searchValue}</p>;
+    }
+  };
 
   var spotifyApi = new SpotifyWebApi();
-  const accessToken = 'BQBnQgvDmUo9UW_-TK83lRYC7ZB8vaRXMcJ9unbiqHautJ5dgFzUIoNTVLf3OjlsZDXn9qW2qRevE7EnjR4'
+  const accessToken =
+    "BQDhi1NNR6it36qiFAE6Lqf3qDvWCWOUm9FboNKE3xT2VH-b6hB67Hx7a3ukzK5ZO2QQDSjbqpbvHlHAqVU";
   spotifyApi.setAccessToken(accessToken);
 
   return (
     <div>
       <Link to="/artist">Artist</Link> | <Link to="/artist/album">Album</Link>
-      <TextField id="outlined-basic" label="Search" variant="outlined" onChange={searchHandler} />
-      <p>{searchValue}</p>
+      <TextField
+        id="outlined-basic"
+        label="Search"
+        variant="outlined"
+        onChange={searchHandler}
+      />
+      {showResult()}
       <Outlet />
     </div>
   );
