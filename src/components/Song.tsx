@@ -7,8 +7,12 @@ interface Props {
 
 const Song: FunctionComponent<Props> = function (props) {
   return (
-    <div>
-      <span>{props.songData.name}</span>
+    <div className="songContainer">
+      <img className="songCover" src={props.songData.album.images.at(2)?.url} />
+      <div className="songInfo">
+        <p className="songName">{props.songData.name}</p>
+        <p className="songArtist">{props.songData.artists.map((artist) => artist.name).join(", ")}</p>
+      </div>
     </div>
   );
 };

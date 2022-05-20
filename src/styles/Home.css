@@ -1,13 +1,17 @@
 .topOfPage {
-  background-color: rgb(2, 10, 1);
+  background-color: rgb(5, 5, 5);
   padding: 20px;
   margin-bottom: 20px;
   color: rgb(245, 245, 245);
 }
 
 .bodyOfPage {
-  max-width: 1400px;
+  max-width: 95%;
   margin: 0 auto;
+}
+
+h2 {
+  margin-top: 50px
 }
 
 .albumsList {
@@ -23,7 +27,7 @@
 }
 
 .albumContainer:hover {
-  background-color: rgb(32, 32, 32);
+  background-color: rgb(15, 15, 15);
   color: rgb(245, 245, 245);
 }
 .albumPicture {
@@ -36,4 +40,32 @@
 
 .albumArtist {
   font-size: small;
+}
+
+.songContainer {
+  background-color: white;
+  max-width: 40%;
+  margin: 15px;
+  padding: 10px;
+  display: flex;
+  align-items: center
+}
+
+.songContainer:hover {
+  background-color: rgb(15, 15, 15);
+  color: rgb(245, 245, 245);
+}
+
+.songInfo {
+  margin-left: 15px
+}
+.songName {
+  font-size: large;
+}
+.songArtist {
+  font-size: small;
+}
+
+p {
+  margin: 5px
 }

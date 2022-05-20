@@ -20,9 +20,10 @@ function Home() {
   const makeSearch = throttle(
     (query: string) => {
       spotifyApi.search
-        .search(query, ["artist", "album", "track"], { limit: 5 })
+        .search(query, ["artist", "album", "track"], { limit: 6 })
         .then((response) => {
           setSearchResults(response);
+          console.log(response)
         })
         .catch(() => {
           setSearchError(true);
@@ -34,7 +35,7 @@ function Home() {
 
   var spotifyApi = new SpotifyWebApi();
   const accessToken =
-    "BQAAmwxZtPeYAAweUbipO9T489f8xCBbdPXbYsIQdkIJusl-I-odYWpzAIXKCnFFi5uOPMX2gg8uDVcuRxA";
+    "BQCLIoJeeoMLqcopI6pNJywMslFOurH9WSjhLJugqs2McXuyzy2T5PPIBMKECcWpBx4vIdFbZPr-MYHetYg";
   spotifyApi.setAccessToken(accessToken);
 
   return (
