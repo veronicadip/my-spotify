@@ -5,7 +5,7 @@ interface Props {
   albumData: SimplifiedAlbum;
 }
 
-const Album: FunctionComponent<Props> = function (props) {
+const AlbumResult: FunctionComponent<Props> = function (props) {
   return (
     <div className="albumContainer">
       <div className="albumPictureContainer">
@@ -25,4 +25,4 @@ const Album: FunctionComponent<Props> = function (props) {
   );
 };
 
-export default Album;
+export default AlbumResult;

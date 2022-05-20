@@ -5,10 +5,10 @@ interface Props {
   songData: Track;
 }
 
-const Song: FunctionComponent<Props> = function (props) {
+const SongResult: FunctionComponent<Props> = function (props) {
   return (
     <div className="songContainer">
-      <img className="songCover" src={props.songData.album.images.at(2)?.url} />
+      <img className="songCover" src={props.songData.album.images.at(2)?.url} alt={`${props.songData.name} cover`} />
       <div className="songInfo">
         <p className="songName">{props.songData.name}</p>
         <p className="songArtist">{props.songData.artists.map((artist) => artist.name).join(", ")}</p>
@@ -17,4 +17,4 @@ const Song: FunctionComponent<Props> = function (props) {
   );
 };
 
-export default Song;
+export default SongResult;

@@ -3,10 +3,11 @@ import { Link, Outlet } from "react-router-dom";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import TextField from "@mui/material/TextField";
 import throttle from "lodash.throttle";
-import Album from "../components/Album";
+import AlbumResult from "../components/AlbumResult";
 import { SearchResponse } from "spotify-web-api-ts/types/types/SpotifyResponses";
 import "../styles/Home.css";
-import Song from "../components/Song";
+import SongResult from "../components/SongResult";
+import ArtistResult from "../components/ArtistResult";
 
 function Home() {
   const [searchResults, setSearchResults] = useState<SearchResponse>({});
@@ -35,7 +36,7 @@ function Home() {
 
   var spotifyApi = new SpotifyWebApi();
   const accessToken =
-    "BQCLIoJeeoMLqcopI6pNJywMslFOurH9WSjhLJugqs2McXuyzy2T5PPIBMKECcWpBx4vIdFbZPr-MYHetYg";
+    "BQAcq9ctSF6c4_uWGkNtVbucpEN9Qz41dEzR7bmXZPpTMEhpPjmdnCjD4ZWSG_08ncZ60PJFb64zbgeMSWc";
   spotifyApi.setAccessToken(accessToken);
 
   return (
@@ -53,14 +54,18 @@ function Home() {
         <h2>Songs</h2>
         <div className="songsList">
           {searchResults.tracks?.items.map((song) => (
-            <Song songData={song} key={song.id} />
+            <SongResult songData={song} key={song.id} />
           ))}
         </div>
         <h2>Albums</h2>
         <div className="albumsList">
           {searchResults.albums?.items.map((album) => (
-            <Album albumData={album} key={album.id} />
+            <AlbumResult albumData={album} key={album.id} />
           ))}
+        </div>
+        <h2>Artists</h2>
+        <div className="artistsList">
+          {searchResults.artists?.items.map((artist) => (<ArtistResult artistData={artist} key={artist.id} />))}
         </div>
       </div>
       <Outlet />
