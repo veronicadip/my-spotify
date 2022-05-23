@@ -1,19 +1,15 @@
-.topOfPage {
-  background-color: rgb(5, 5, 5);
-  padding: 20px;
-  margin-bottom: 20px;
-  color: rgb(245, 245, 245);
-}
-
 .bodyOfPage {
   max-width: 95%;
   margin: 0 auto;
 }
-
+.loadingContainer {
+  position: relative;
+}
 .circularProgress {
-  margin-top: 300px;
-  margin-left: 25%;
-  margin-right: 25%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: 20%
 }
 
 h2 {

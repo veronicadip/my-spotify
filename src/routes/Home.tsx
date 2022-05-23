@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { SpotifyWebApi } from "spotify-web-api-ts";
-import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
 import throttle from "lodash.throttle";
 import AlbumResult from "../components/AlbumResult";
@@ -9,7 +8,8 @@ import { SearchResponse } from "spotify-web-api-ts/types/types/SpotifyResponses"
 import "../styles/Home.css";
 import SongResult from "../components/SongResult";
 import ArtistResult from "../components/ArtistResult";
-import { dialogActionsClasses } from "@mui/material";
+import SearchAppBar from "../components/TopOfPage"
+
 
 function Home() {
   const [searchResults, setSearchResults] = useState<SearchResponse>({});
@@ -43,7 +43,7 @@ function Home() {
 
   var spotifyApi = new SpotifyWebApi();
   const accessToken =
-    "BQCHVx_VcOdG0hpUBI8m3gNrixElXWjuT0AIM18WYSUxsouXdVr9vhpi4TvG0jUuNXZkZ58W8gWUlvq05Ew";
+    "BQC6fsC1V_AsgOy9mnYQcv_Uu4sXmKks3NLtJH6rQ_UnksauMKPGBxaXDIIolMfQJV0Zz0sj6YNMRivYAR8";
   spotifyApi.setAccessToken(accessToken);
 
   const renderSongs = () => {
@@ -86,7 +86,11 @@ function Home() {
   const renderSearchResults = () => {
     if (searchValue) {
       if (isLoading) {
-        return <CircularProgress color="inherit" className="circularProgress" />
+        return (
+          <div className="loadingContainer">
+        <CircularProgress color="inherit" className="circularProgress" />
+          </div>
+        )
       }
       return (
         <div>
@@ -103,16 +107,8 @@ function Home() {
 
   return (
     <div>
-      <div className="topOfPage">
-        <Link to="/artist">Artist</Link> | <Link to="/artist/album">Album</Link>
-      </div>
+      <SearchAppBar searchHandler={searchHandler} />
       <div className="bodyOfPage">
-        <TextField
-          id="outlined-basic"
-          label="Search"
-          variant="outlined"
-          onChange={searchHandler}
-        />
         {renderSearchResults()}
       </div>
       <Outlet />
