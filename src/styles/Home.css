@@ -11,7 +11,9 @@
   left: 50%;
   margin-top: 20%
 }
-
+.errorMessage {
+  margin-top: 50px;
+}
 h2 {
   margin-top: 50px
 }

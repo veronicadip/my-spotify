@@ -8,7 +8,8 @@ import { SearchResponse } from "spotify-web-api-ts/types/types/SpotifyResponses"
 import "../styles/Home.css";
 import SongResult from "../components/SongResult";
 import ArtistResult from "../components/ArtistResult";
-import SearchAppBar from "../components/TopOfPage"
+import SearchAppBar from "../components/TopOfPage";
+import Alert from "@mui/material/Alert"
 
 
 function Home() {
@@ -19,8 +20,12 @@ function Home() {
 
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    makeSearch(value);
-    setSearchValue(value);
+    if (value) {
+      return (
+        makeSearch(value),
+        setSearchValue(value)
+      )
+    }
   };
 
   const makeSearch = throttle(
@@ -43,7 +48,7 @@ function Home() {
 
   var spotifyApi = new SpotifyWebApi();
   const accessToken =
-    "BQC6fsC1V_AsgOy9mnYQcv_Uu4sXmKks3NLtJH6rQ_UnksauMKPGBxaXDIIolMfQJV0Zz0sj6YNMRivYAR8";
+    "BQC5yPmsokDypyl_qBbV7gUF4JXXvJLnFtCez7oGmMCaY1Qi89BYpMF4nUuxAAzGN7vlNnWy3ybHksIkENo";
   spotifyApi.setAccessToken(accessToken);
 
   const renderSongs = () => {
@@ -88,7 +93,14 @@ function Home() {
       if (isLoading) {
         return (
           <div className="loadingContainer">
-        <CircularProgress color="inherit" className="circularProgress" />
+            <CircularProgress color="inherit" className="circularProgress" />
+          </div>
+        )
+      }
+      if (searchError) {
+        return (
+          <div>
+            <Alert severity="error" className="errorMessage">There was an error loading the data, please try again.</Alert>
           </div>
         )
       }
@@ -103,6 +115,7 @@ function Home() {
         </div>
       )
     }
+    return <h2>Search here the music you want!</h2>
   }
 
   return (
