@@ -9,6 +9,7 @@ import { SearchResponse } from "spotify-web-api-ts/types/types/SpotifyResponses"
 import "../styles/Home.css";
 import SongResult from "../components/SongResult";
 import ArtistResult from "../components/ArtistResult";
+import { dialogActionsClasses } from "@mui/material";
 
 function Home() {
   const [searchResults, setSearchResults] = useState<SearchResponse>({});
@@ -42,8 +43,45 @@ function Home() {
 
   var spotifyApi = new SpotifyWebApi();
   const accessToken =
-    "BQB5OL6buxDKpHKZPgObmBMWeC5IwlwFqoMTSwPl7ZnSmfLAxpMG3Ml7Vov7ZvWIr5ab-xojWnupPuTSNzE";
+    "BQCHVx_VcOdG0hpUBI8m3gNrixElXWjuT0AIM18WYSUxsouXdVr9vhpi4TvG0jUuNXZkZ58W8gWUlvq05Ew";
   spotifyApi.setAccessToken(accessToken);
+
+  const renderSongs = () => {
+    if (searchResults.tracks?.items.length) {
+      return (
+        <div className="songsList">
+          {searchResults.tracks?.items.map((song) => (
+            <SongResult songData={song} key={song.id} />
+          ))}
+        </div>
+      )
+    }
+    return <p>{`There aren‘t any songs with the name "${searchValue}"`}</p>
+  }
+
+  const renderAlbums = () => {
+    if (searchResults.albums?.items.length) {
+      return (
+        <div className="albumsList">
+          {searchResults.albums?.items.map((album) => (
+            <AlbumResult albumData={album} key={album.id} />
+          ))}
+        </div>
+      )
+    }
+    return <p>{`There aren‘t any albums with the name "${searchValue}"`}</p>
+  }
+
+  const renderArtists = () => {
+    if (searchResults.artists?.items.length) {
+      return (
+        <div className="artistsList">
+          {searchResults.artists?.items.map((artist) => (<ArtistResult artistData={artist} key={artist.id} />))}
+        </div>
+      )
+    }
+    return <p>{`There aren‘t any artists with the name ${searchValue}`}</p>
+  }
 
   const renderSearchResults = () => {
     if (searchValue) {
@@ -53,21 +91,11 @@ function Home() {
       return (
         <div>
           <h2>Songs</h2>
-          <div className="songsList">
-            {searchResults.tracks?.items.map((song) => (
-              <SongResult songData={song} key={song.id} />
-            ))}
-          </div>
+          {renderSongs()}
           <h2>Albums</h2>
-          <div className="albumsList">
-            {searchResults.albums?.items.map((album) => (
-              <AlbumResult albumData={album} key={album.id} />
-            ))}
-          </div>
+          {renderAlbums()}
           <h2>Artists</h2>
-          <div className="artistsList">
-            {searchResults.artists?.items.map((artist) => (<ArtistResult artistData={artist} key={artist.id} />))}
-          </div>
+          {renderArtists()}
         </div>
       )
     }
