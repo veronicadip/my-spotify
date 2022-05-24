@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import CircularProgress from "@mui/material/CircularProgress";
 import throttle from "lodash.throttle";
@@ -8,12 +7,13 @@ import { SearchResponse } from "spotify-web-api-ts/types/types/SpotifyResponses"
 import "../styles/Home.css";
 import SongResult from "../components/SongResult";
 import ArtistResult from "../components/ArtistResult";
-import SearchAppBar from "../components/TopOfPage";
+import SearchAppBar from "../components/TopOfPageHome";
 import Alert from "@mui/material/Alert";
+import currentAccessToken from "../lib/accessToken";
 
 function Home() {
   const [searchResults, setSearchResults] = useState<SearchResponse>({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingSearch, setIsLoadingSearch] = useState(true);
   const [searchError, setSearchError] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -30,12 +30,11 @@ function Home() {
         .search(query, ["artist", "album", "track"], { limit: 5 })
         .then((response) => {
           setSearchResults(response);
-          console.log(response);
-          setIsLoading(false);
+          setIsLoadingSearch(false);
         })
         .catch(() => {
           setSearchError(true);
-          setIsLoading(false);
+          setIsLoadingSearch(false);
         });
     },
     400,
@@ -43,8 +42,7 @@ function Home() {
   );
 
   var spotifyApi = new SpotifyWebApi();
-  const accessToken =
-    "BQBZHrBF8sSUoGIEyszqz1d6fOMSHejYv8ddVgCelTH_eiID6S5kMsEfmD_HROmmyZppSp5fHjNYRH9FMJ0";
+  const accessToken = currentAccessToken;
   spotifyApi.setAccessToken(accessToken);
 
   const renderSongs = () => {
@@ -88,7 +86,7 @@ function Home() {
 
   const renderSearchResults = () => {
     if (searchValue) {
-      if (isLoading) {
+      if (isLoadingSearch) {
         return (
           <div className="loadingContainer">
             <CircularProgress color="inherit" className="circularProgress" />
@@ -104,6 +102,7 @@ function Home() {
           </div>
         );
       }
+
       return (
         <div>
           <h2>Songs</h2>
@@ -115,14 +114,13 @@ function Home() {
         </div>
       );
     }
-    return <h2>Search here the music you want!</h2>;
+    return <h2>Search here the music that you want!</h2>;
   };
 
   return (
     <div>
       <SearchAppBar searchHandler={searchHandler} />
       <div className="bodyOfPage">{renderSearchResults()}</div>
-      <Outlet />
     </div>
   );
 }
