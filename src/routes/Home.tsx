@@ -9,8 +9,7 @@ import "../styles/Home.css";
 import SongResult from "../components/SongResult";
 import ArtistResult from "../components/ArtistResult";
 import SearchAppBar from "../components/TopOfPage";
-import Alert from "@mui/material/Alert"
-
+import Alert from "@mui/material/Alert";
 
 function Home() {
   const [searchResults, setSearchResults] = useState<SearchResponse>({});
@@ -21,17 +20,14 @@ function Home() {
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value) {
-      return (
-        makeSearch(value),
-        setSearchValue(value)
-      )
+      return makeSearch(value), setSearchValue(value);
     }
   };
 
   const makeSearch = throttle(
     (query: string) => {
       spotifyApi.search
-        .search(query, ["artist", "album", "track"], { limit: 6 })
+        .search(query, ["artist", "album", "track"], { limit: 5 })
         .then((response) => {
           setSearchResults(response);
           console.log(response);
@@ -48,7 +44,7 @@ function Home() {
 
   var spotifyApi = new SpotifyWebApi();
   const accessToken =
-    "BQC5yPmsokDypyl_qBbV7gUF4JXXvJLnFtCez7oGmMCaY1Qi89BYpMF4nUuxAAzGN7vlNnWy3ybHksIkENo";
+    "BQBZHrBF8sSUoGIEyszqz1d6fOMSHejYv8ddVgCelTH_eiID6S5kMsEfmD_HROmmyZppSp5fHjNYRH9FMJ0";
   spotifyApi.setAccessToken(accessToken);
 
   const renderSongs = () => {
@@ -59,10 +55,10 @@ function Home() {
             <SongResult songData={song} key={song.id} />
           ))}
         </div>
-      )
+      );
     }
-    return <p>{`There aren‘t any songs with the name "${searchValue}"`}</p>
-  }
+    return <p>{`There aren't any songs with the name "${searchValue}"`}</p>;
+  };
 
   const renderAlbums = () => {
     if (searchResults.albums?.items.length) {
@@ -72,21 +68,23 @@ function Home() {
             <AlbumResult albumData={album} key={album.id} />
           ))}
         </div>
-      )
+      );
     }
-    return <p>{`There aren‘t any albums with the name "${searchValue}"`}</p>
-  }
+    return <p>{`There aren't any albums with the name "${searchValue}"`}</p>;
+  };
 
   const renderArtists = () => {
     if (searchResults.artists?.items.length) {
       return (
         <div className="artistsList">
-          {searchResults.artists?.items.map((artist) => (<ArtistResult artistData={artist} key={artist.id} />))}
+          {searchResults.artists?.items.map((artist) => (
+            <ArtistResult artistData={artist} key={artist.id} />
+          ))}
         </div>
-      )
+      );
     }
-    return <p>{`There aren‘t any artists with the name ${searchValue}`}</p>
-  }
+    return <p>{`There aren't any artists with the name ${searchValue}`}</p>;
+  };
 
   const renderSearchResults = () => {
     if (searchValue) {
@@ -95,14 +93,16 @@ function Home() {
           <div className="loadingContainer">
             <CircularProgress color="inherit" className="circularProgress" />
           </div>
-        )
+        );
       }
       if (searchError) {
         return (
           <div>
-            <Alert severity="error" className="errorMessage">There was an error loading the data, please try again.</Alert>
+            <Alert severity="error" className="errorMessage">
+              There was an error loading the data, please try again.
+            </Alert>
           </div>
-        )
+        );
       }
       return (
         <div>
@@ -113,17 +113,15 @@ function Home() {
           <h2>Artists</h2>
           {renderArtists()}
         </div>
-      )
+      );
     }
-    return <h2>Search here the music you want!</h2>
-  }
+    return <h2>Search here the music you want!</h2>;
+  };
 
   return (
     <div>
       <SearchAppBar searchHandler={searchHandler} />
-      <div className="bodyOfPage">
-        {renderSearchResults()}
-      </div>
+      <div className="bodyOfPage">{renderSearchResults()}</div>
       <Outlet />
     </div>
   );

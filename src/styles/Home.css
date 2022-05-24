@@ -9,13 +9,13 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: 20%
+  margin-top: 20%;
 }
 .errorMessage {
   margin-top: 50px;
 }
 h2 {
-  margin-top: 50px
+  margin-top: 50px;
 }
 
 .albumsList {
@@ -52,16 +52,18 @@ h2 {
   margin: 15px;
   padding: 10px;
   display: flex;
-  align-items: center
+  align-items: center;
 }
-
+.songCover {
+  width: 64px;
+}
 .songContainer:hover {
   background-color: rgb(15, 15, 15);
   color: rgb(245, 245, 245);
 }
 
 .songInfo {
-  margin-left: 15px
+  margin-left: 15px;
 }
 .songName {
   font-size: large;
@@ -93,9 +95,9 @@ h2 {
 .artistName {
   font-weight: bold;
   margin-left: 25px;
-  padding-bottom: 15px
+  padding-bottom: 15px;
 }
 
 p {
-  margin: 5px
+  margin: 5px;
 }

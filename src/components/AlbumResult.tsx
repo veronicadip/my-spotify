@@ -5,16 +5,29 @@ interface Props {
   albumData: SimplifiedAlbum;
 }
 
+const RenderAlbumCover: FunctionComponent<Props> = function (props) {
+  if (props.albumData.images.length) {
+    return (
+      <img
+        className="albumPicture"
+        src={props.albumData.images.at(1)?.url}
+        alt={`${props.albumData.name} album cover`}
+      />
+    );
+  }
+  return (
+    <img
+      src="https://tidal.com/browse/assets/images/defaultImages/defaultPlaylistImage.png"
+      alt={`${props.albumData.name} album cover`}
+      className="albumPicture"
+    />
+  );
+};
+
 const AlbumResult: FunctionComponent<Props> = function (props) {
   return (
     <div className="albumContainer">
-      <div className="albumPictureContainer">
-        <img
-          className="albumPicture"
-          src={props.albumData.images.at(1)?.url}
-          alt={`${props.albumData.name} album cover`}
-        />
-      </div>
+      <div className="albumPictureContainer">{RenderAlbumCover(props)}</div>
       <div className="albumInfo">
         <p className="albumName">{props.albumData.name}</p>
         <p className="albumArtist">
