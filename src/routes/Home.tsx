@@ -1,39 +1,127 @@
 import React, { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
-import SpotifyWebApi from "spotify-web-api-js";
-import TextField from "@mui/material/TextField";
+import { Outlet } from "react-router-dom";
+import { SpotifyWebApi } from "spotify-web-api-ts";
+import CircularProgress from "@mui/material/CircularProgress";
 import throttle from "lodash.throttle";
-import debounce from "lodash.debounce";
+import AlbumResult from "../components/AlbumResult";
+import { SearchResponse } from "spotify-web-api-ts/types/types/SpotifyResponses";
+import "../styles/Home.css";
+import SongResult from "../components/SongResult";
+import ArtistResult from "../components/ArtistResult";
+import SearchAppBar from "../components/TopOfPage";
+import Alert from "@mui/material/Alert";
 
 function Home() {
-  const [searchResults, setSearchResults] = useState({})
-  const [searchError, setSearchError] = useState(false)
-  const [searchValue, setSearchValue] = useState("asd")
+  const [searchResults, setSearchResults] = useState<SearchResponse>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchError, setSearchError] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-    makeSearch()
-  }
+    const value = event.target.value;
+    if (value) {
+      return makeSearch(value), setSearchValue(value);
+    }
+  };
 
-  const makeSearch = debounce(() => {
-    spotifyApi.search(searchValue, ["artist", "album", "track"]).then((response) => {
-      setSearchResults(response);
-      console.log(searchResults)
-    }).catch(() => {
-      setSearchError(true)
-    })
-  }, 2000)
+  const makeSearch = throttle(
+    (query: string) => {
+      spotifyApi.search
+        .search(query, ["artist", "album", "track"], { limit: 5 })
+        .then((response) => {
+          setSearchResults(response);
+          console.log(response);
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setSearchError(true);
+          setIsLoading(false);
+        });
+    },
+    400,
+    { leading: false }
+  );
 
   var spotifyApi = new SpotifyWebApi();
-  const accessToken = 'BQBtswTBtmiGjD9sWr1oxKeC1VTgA3o5QaG2FYa9_LzKwoLOrfPbOjvD2fvifErDYQeXhX46lZtBOGMPjY4'
+  const accessToken =
+    "BQBZHrBF8sSUoGIEyszqz1d6fOMSHejYv8ddVgCelTH_eiID6S5kMsEfmD_HROmmyZppSp5fHjNYRH9FMJ0";
   spotifyApi.setAccessToken(accessToken);
+
+  const renderSongs = () => {
+    if (searchResults.tracks?.items.length) {
+      return (
+        <div className="songsList">
+          {searchResults.tracks?.items.map((song) => (
+            <SongResult songData={song} key={song.id} />
+          ))}
+        </div>
+      );
+    }
+    return <p>{`There aren't any songs with the name "${searchValue}"`}</p>;
+  };
+
+  const renderAlbums = () => {
+    if (searchResults.albums?.items.length) {
+      return (
+        <div className="albumsList">
+          {searchResults.albums?.items.map((album) => (
+            <AlbumResult albumData={album} key={album.id} />
+          ))}
+        </div>
+      );
+    }
+    return <p>{`There aren't any albums with the name "${searchValue}"`}</p>;
+  };
+
+  const renderArtists = () => {
+    if (searchResults.artists?.items.length) {
+      return (
+        <div className="artistsList">
+          {searchResults.artists?.items.map((artist) => (
+            <ArtistResult artistData={artist} key={artist.id} />
+          ))}
+        </div>
+      );
+    }
+    return <p>{`There aren't any artists with the name ${searchValue}`}</p>;
+  };
+
+  const renderSearchResults = () => {
+    if (searchValue) {
+      if (isLoading) {
+        return (
+          <div className="loadingContainer">
+            <CircularProgress color="inherit" className="circularProgress" />
+          </div>
+        );
+      }
+      if (searchError) {
+        return (
+          <div>
+            <Alert severity="error" className="errorMessage">
+              There was an error loading the data, please try again.
+            </Alert>
+          </div>
+        );
+      }
+      return (
+        <div>
+          <h2>Songs</h2>
+          {renderSongs()}
+          <h2>Albums</h2>
+          {renderAlbums()}
+          <h2>Artists</h2>
+          {renderArtists()}
+        </div>
+      );
+    }
+    return <h2>Search here the music you want!</h2>;
+  };
 
   return (
     <div>
-      <h1>Home</h1>
-      <Link to="/artist">Artist</Link> | <Link to="/artist/album">Album</Link>
-      <TextField id="outlined-basic" label="Search" variant="outlined" onChange={searchHandler} />
-      <p>{searchValue}</p>
+      <SearchAppBar searchHandler={searchHandler} />
+      <div className="bodyOfPage">{renderSearchResults()}</div>
       <Outlet />
     </div>
   );
