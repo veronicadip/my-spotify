@@ -44,7 +44,7 @@ function Home() {
 
   var spotifyApi = new SpotifyWebApi();
   const accessToken =
-    "BQBZHrBF8sSUoGIEyszqz1d6fOMSHejYv8ddVgCelTH_eiID6S5kMsEfmD_HROmmyZppSp5fHjNYRH9FMJ0";
+    "BQCVXSDCAlgOZr-oOz4fUs6NxRCinmLz0m8UPs4sSGFdqmn9RGrsRJ8nfYvqwUwKnjILVLOp7K0ZD0MVRZ8";
   spotifyApi.setAccessToken(accessToken);
 
   const renderSongs = () => {
