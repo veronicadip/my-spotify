@@ -1,30 +1,11 @@
 import { FunctionComponent } from "react";
 import { SimplifiedAlbum } from "spotify-web-api-ts/types/types/SpotifyObjects.js";
+import ImageWithFallback from "./ImageWithFallback";
 
 interface Props {
   artistAlbum: SimplifiedAlbum;
-  src: string | undefined;
   fallback: string;
 }
-
-const ImageWithFallback: FunctionComponent<Props> = function (props) {
-  if (props.artistAlbum.images.length) {
-    return (
-      <img
-        src={props.src}
-        alt={`${props.artistAlbum.name} album cover`}
-        className="albumCover"
-      />
-    );
-  }
-  return (
-    <img
-      src={props.fallback}
-      alt={`${props.artistAlbum.name} album cover`}
-      className="albumCover"
-    />
-  );
-};
 
 const ArtistAlbums: FunctionComponent<Props> = function (props) {
   if (
@@ -33,7 +14,13 @@ const ArtistAlbums: FunctionComponent<Props> = function (props) {
   ) {
     return (
       <div className="artistAlbum">
-        {ImageWithFallback(props)}
+        <ImageWithFallback
+          src={props.artistAlbum.images.at(1)?.url}
+          fallback={props.fallback}
+          alt={`${props.artistAlbum.name} album cover`}
+          className="albumCover"
+          imagesArray={props.artistAlbum.images.length}
+        />
         <span className="artistAlbumName">{props.artistAlbum.name}</span>
       </div>
     );

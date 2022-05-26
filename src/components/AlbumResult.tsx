@@ -1,35 +1,24 @@
 import { FunctionComponent } from "react";
 import { SimplifiedAlbum } from "spotify-web-api-ts/types/types/SpotifyObjects";
+import ImageWithFallback from "./ImageWithFallback";
 
 interface Props {
   albumData: SimplifiedAlbum;
-  src: string | undefined;
   fallback: string;
 }
-
-const ImageWithFallback: FunctionComponent<Props> = function (props) {
-  if (props.albumData.images.length) {
-    return (
-      <img
-        className="albumPicture"
-        src={props.src}
-        alt={`${props.albumData.name} album cover`}
-      />
-    );
-  }
-  return (
-    <img
-      src={props.fallback}
-      alt={`${props.albumData.name} album cover`}
-      className="albumPicture"
-    />
-  );
-};
 
 const AlbumResult: FunctionComponent<Props> = function (props) {
   return (
     <div className="albumContainer">
-      <div className="albumPictureContainer">{ImageWithFallback(props)}</div>
+      <div className="albumPictureContainer">
+        <ImageWithFallback
+          src={props.albumData.images.at(1)?.url}
+          fallback={props.fallback}
+          alt={`${props.albumData.name} album cover`}
+          className="albumPicture"
+          imagesArray={props.albumData.images.length}
+        />
+      </div>
       <div className="albumInfo">
         <p className="albumName">{props.albumData.name}</p>
         <p className="albumArtist">

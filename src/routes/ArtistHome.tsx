@@ -11,6 +11,7 @@ import ArtistTopTrack from "../components/ArtistTopTrack";
 import "../styles/ArtistHome.css";
 import ArtistAlbums from "../components/ArtistAlbums";
 import ArtistSingle from "../components/ArtistSingle";
+import ImageWithFallback from "../components/ImageWithFallback";
 
 type ArtistHomeParams = {
   artistId: string;
@@ -70,24 +71,6 @@ function ArtistHome() {
       });
   }, []);
 
-  const ImageWithFallback = () => {
-    if (artistInfo?.images) {
-      return (
-        <img
-          src={artistInfo.images.at(1)?.url}
-          alt={`${artistInfo.name} profile picture`}
-          className="artistProfilePicture"
-        />
-      );
-    }
-    return (
-      <img
-        src={artistPictureFallback}
-        alt={`${artistInfo?.name} profile picture`}
-      />
-    );
-  };
-
   const renderArtistHome = () => {
     if (isLoadingArtist || isLoadingTracks || isLoadingAlbums) {
       return (
@@ -108,7 +91,13 @@ function ArtistHome() {
     return (
       <div>
         <div className="artistInfoContainer">
-          {ImageWithFallback()}
+          <ImageWithFallback
+            src={artistInfo?.images.at(1)?.url}
+            fallback={artistPictureFallback}
+            alt={`${artistInfo?.name} profile picture`}
+            className="artistProfilePicture"
+            imagesArray={artistInfo?.images.length}
+          />
           <div className="nameAndFollowers">
             <h1 className="artistNameHome">{artistInfo?.name}</h1>
             <span className="followers">{`${artistInfo?.followers.total} followers`}</span>
@@ -119,7 +108,6 @@ function ArtistHome() {
           {topTracks?.map((track) => (
             <ArtistTopTrack
               topTrackInfo={track}
-              src={track.album.images.at(2)?.url}
               fallback={albumCoverFallback}
               key={track.id}
             />
@@ -130,7 +118,6 @@ function ArtistHome() {
           {artistAlbums?.items.map((album) => (
             <ArtistAlbums
               artistAlbum={album}
-              src={album.images.at(1)?.url}
               fallback={albumCoverFallback}
               key={album.id}
             />
@@ -141,7 +128,6 @@ function ArtistHome() {
           {artistAlbums?.items.map((single) => (
             <ArtistSingle
               artistSingle={single}
-              src={single.images.at(1)?.url}
               fallback={albumCoverFallback}
               key={single.id}
             />

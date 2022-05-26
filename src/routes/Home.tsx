@@ -56,7 +56,6 @@ function Home() {
           {searchResults.tracks?.items.map((song) => (
             <SongResult
               songData={song}
-              src={song.album.images.at(2)?.url}
               fallback={albumCoverFallback}
               key={song.id}
             />
@@ -74,7 +73,6 @@ function Home() {
           {searchResults.albums?.items.map((album) => (
             <AlbumResult
               albumData={album}
-              src={album.images.at(1)?.url}
               fallback={albumCoverFallback}
               key={album.id}
             />
@@ -92,7 +90,6 @@ function Home() {
           {searchResults.artists?.items.map((artist) => (
             <ArtistResult
               artistData={artist}
-              src={artist.images.at(1)?.url}
               fallback={artistPictureFallback}
               key={artist.id}
             />
