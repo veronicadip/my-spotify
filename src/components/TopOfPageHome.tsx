@@ -1,3 +1,4 @@
+import { FunctionComponent } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -5,7 +6,13 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+
+interface Props {
+  searchHandler: React.ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  >;
+}
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -48,11 +55,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function SearchAppBar() {
-  let navigate = useNavigate();
-  const goHome = () => {
-    navigate("/");
-  };
+const SearchAppBar: FunctionComponent<Props> = function (props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="inherit">
@@ -72,13 +75,13 @@ function SearchAppBar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
-              onClick={goHome}
+              onChange={props.searchHandler}
             />
           </Search>
         </Toolbar>
       </AppBar>
     </Box>
   );
-}
+};
 
 export default SearchAppBar;
