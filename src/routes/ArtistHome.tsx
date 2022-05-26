@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import currentAccessToken from "../lib/accessToken";
 import { Artist, Track } from "spotify-web-api-ts/types/types/SpotifyObjects";
-import { GetArtistAlbumsResponse } from "spotify-web-api-ts/types/types/SpotifyResponses.js"
+import { GetArtistAlbumsResponse } from "spotify-web-api-ts/types/types/SpotifyResponses.js";
 import SearchAppBar from "../components/TopOfPage";
 import { useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -56,7 +56,8 @@ function ArtistHome() {
         setTracksError(true);
         setIsLoadingTracks(false);
       });
-    spotifyApi.artists.getArtistAlbums(artistId, { limit: 50, country: "AR" })
+    spotifyApi.artists
+      .getArtistAlbums(artistId, { limit: 50, country: "AR" })
       .then((response) => {
         setArtistAlbums(response);
         console.log(response);
@@ -65,7 +66,7 @@ function ArtistHome() {
       .catch(() => {
         setAlbumsError(true);
         setIsLoadingAlbums(false);
-      })
+      });
   }, []);
 
   const renderArtistPicture = () => {
@@ -114,14 +115,22 @@ function ArtistHome() {
         </div>
         <h2>Popular songs</h2>
         <div className="topTracksList">
-          {topTracks?.map((track) => (<ArtistTopTrack topTrackInfo={track} key={track.id} />))}
+          {topTracks?.map((track) => (
+            <ArtistTopTrack topTrackInfo={track} key={track.id} />
+          ))}
         </div>
         <h2>Albums</h2>
         <div className="albumsList">
-          {artistAlbums?.items.map((album) => (<ArtistAlbums artistAlbum={album} key={album.id} />))}
+          {artistAlbums?.items.map((album) => (
+            <ArtistAlbums artistAlbum={album} key={album.id} />
+          ))}
         </div>
         <h2>Singles</h2>
-        {artistAlbums?.items.map((single) => (<ArtistSingle artistSingle={single} key={single.id} />))}
+        <div className="singlesList">
+          {artistAlbums?.items.map((single) => (
+            <ArtistSingle artistSingle={single} key={single.id} />
+          ))}
+        </div>
       </div>
     );
   };

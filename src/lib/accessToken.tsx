@@ -1,6 +1,6 @@
 import React from "react";
 
 const currentAccessToken =
-  "BQD-z4ragN1HsyZKYpB-CqRiCQ9pQbLWXeUBYDNEyMHpi9UzQTb_POIn7AYP1YF4Oe2GrJeedt9iO8VFiIM";
+  "BQAhwbrcPW_ruzcata9Hkz8I2IbFCUJUZo02TD3jAK-7NSm8iqEEpxO1MZYD68fcIeyn-0xwqzCSb_Qh6Vw";
 
 export default currentAccessToken;
