@@ -5,14 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -62,30 +55,28 @@ function SearchAppBar() {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <ThemeProvider theme={darkTheme}>
-        <AppBar position="static" color="inherit">
-          <Toolbar>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-            >
-              PUKIFY
-            </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-                onClick={goHome}
-              />
-            </Search>
-          </Toolbar>
-        </AppBar>
-      </ThemeProvider>
+      <AppBar position="static" color="inherit">
+        <Toolbar>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+          >
+            PUKIFY
+          </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+              onClick={goHome}
+            />
+          </Search>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }

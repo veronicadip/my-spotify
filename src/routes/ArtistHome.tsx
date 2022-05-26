@@ -28,6 +28,10 @@ function ArtistHome() {
   const [artistAlbums, setArtistAlbums] = useState<GetArtistAlbumsResponse>();
   const [isLoadingAlbums, setIsLoadingAlbums] = useState(true);
   const [albumsError, setAlbumsError] = useState(false);
+  const albumCoverFallback =
+    "https://tidal.com/browse/assets/images/defaultImages/defaultPlaylistImage.png";
+  const artistPictureFallback =
+    "https://i.scdn.co/image/ab6761610000e5eb55d39ab9c21d506aa52f7021";
 
   var spotifyApi = new SpotifyWebApi();
   const accessToken = currentAccessToken;
@@ -38,7 +42,6 @@ function ArtistHome() {
       .getArtist(artistId)
       .then((response) => {
         setArtistInfo(response);
-        console.log(response);
         setIsLoadingArtist(false);
       })
       .catch(() => {
@@ -49,7 +52,6 @@ function ArtistHome() {
       .getArtistTopTracks(artistId, "AR")
       .then((response) => {
         setTopTracks(response);
-        console.log(response);
         setIsLoadingTracks(false);
       })
       .catch(() => {
@@ -60,7 +62,6 @@ function ArtistHome() {
       .getArtistAlbums(artistId, { limit: 50, country: "AR" })
       .then((response) => {
         setArtistAlbums(response);
-        console.log(response);
         setIsLoadingAlbums(false);
       })
       .catch(() => {
@@ -69,7 +70,7 @@ function ArtistHome() {
       });
   }, []);
 
-  const renderArtistPicture = () => {
+  const ImageWithFallback = () => {
     if (artistInfo?.images) {
       return (
         <img
@@ -81,7 +82,7 @@ function ArtistHome() {
     }
     return (
       <img
-        src="https://i.scdn.co/image/ab6761610000e5eb55d39ab9c21d506aa52f7021"
+        src={artistPictureFallback}
         alt={`${artistInfo?.name} profile picture`}
       />
     );
@@ -107,28 +108,43 @@ function ArtistHome() {
     return (
       <div>
         <div className="artistInfoContainer">
-          {renderArtistPicture()}
+          {ImageWithFallback()}
           <div className="nameAndFollowers">
-            <h1 className="artistName">{artistInfo?.name}</h1>
+            <h1 className="artistNameHome">{artistInfo?.name}</h1>
             <span className="followers">{`${artistInfo?.followers.total} followers`}</span>
           </div>
         </div>
         <h2>Popular songs</h2>
         <div className="topTracksList">
           {topTracks?.map((track) => (
-            <ArtistTopTrack topTrackInfo={track} key={track.id} />
+            <ArtistTopTrack
+              topTrackInfo={track}
+              src={track.album.images.at(2)?.url}
+              fallback={albumCoverFallback}
+              key={track.id}
+            />
           ))}
         </div>
         <h2>Albums</h2>
         <div className="albumsList">
           {artistAlbums?.items.map((album) => (
-            <ArtistAlbums artistAlbum={album} key={album.id} />
+            <ArtistAlbums
+              artistAlbum={album}
+              src={album.images.at(1)?.url}
+              fallback={albumCoverFallback}
+              key={album.id}
+            />
           ))}
         </div>
         <h2>Singles</h2>
         <div className="singlesList">
           {artistAlbums?.items.map((single) => (
-            <ArtistSingle artistSingle={single} key={single.id} />
+            <ArtistSingle
+              artistSingle={single}
+              src={single.images.at(1)?.url}
+              fallback={albumCoverFallback}
+              key={single.id}
+            />
           ))}
         </div>
       </div>

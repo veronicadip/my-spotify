@@ -16,6 +16,10 @@ function Home() {
   const [isLoadingSearch, setIsLoadingSearch] = useState(true);
   const [searchError, setSearchError] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const albumCoverFallback =
+    "https://tidal.com/browse/assets/images/defaultImages/defaultPlaylistImage.png";
+  const artistPictureFallback =
+    "https://i.scdn.co/image/ab6761610000e5eb55d39ab9c21d506aa52f7021";
 
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -50,7 +54,12 @@ function Home() {
       return (
         <div className="songsList">
           {searchResults.tracks?.items.map((song) => (
-            <SongResult songData={song} key={song.id} />
+            <SongResult
+              songData={song}
+              src={song.album.images.at(2)?.url}
+              fallback={albumCoverFallback}
+              key={song.id}
+            />
           ))}
         </div>
       );
@@ -63,7 +72,12 @@ function Home() {
       return (
         <div className="albumsList">
           {searchResults.albums?.items.map((album) => (
-            <AlbumResult albumData={album} key={album.id} />
+            <AlbumResult
+              albumData={album}
+              src={album.images.at(1)?.url}
+              fallback={albumCoverFallback}
+              key={album.id}
+            />
           ))}
         </div>
       );
@@ -76,7 +90,12 @@ function Home() {
       return (
         <div className="artistsList">
           {searchResults.artists?.items.map((artist) => (
-            <ArtistResult artistData={artist} key={artist.id} />
+            <ArtistResult
+              artistData={artist}
+              src={artist.images.at(1)?.url}
+              fallback={artistPictureFallback}
+              key={artist.id}
+            />
           ))}
         </div>
       );

@@ -3,21 +3,23 @@ import { SimplifiedAlbum } from "spotify-web-api-ts/types/types/SpotifyObjects";
 
 interface Props {
   albumData: SimplifiedAlbum;
+  src: string | undefined;
+  fallback: string;
 }
 
-const RenderAlbumCover: FunctionComponent<Props> = function (props) {
+const ImageWithFallback: FunctionComponent<Props> = function (props) {
   if (props.albumData.images.length) {
     return (
       <img
         className="albumPicture"
-        src={props.albumData.images.at(1)?.url}
+        src={props.src}
         alt={`${props.albumData.name} album cover`}
       />
     );
   }
   return (
     <img
-      src="https://tidal.com/browse/assets/images/defaultImages/defaultPlaylistImage.png"
+      src={props.fallback}
       alt={`${props.albumData.name} album cover`}
       className="albumPicture"
     />
@@ -27,7 +29,7 @@ const RenderAlbumCover: FunctionComponent<Props> = function (props) {
 const AlbumResult: FunctionComponent<Props> = function (props) {
   return (
     <div className="albumContainer">
-      <div className="albumPictureContainer">{RenderAlbumCover(props)}</div>
+      <div className="albumPictureContainer">{ImageWithFallback(props)}</div>
       <div className="albumInfo">
         <p className="albumName">{props.albumData.name}</p>
         <p className="albumArtist">

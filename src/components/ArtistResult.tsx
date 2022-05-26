@@ -4,13 +4,15 @@ import { Link } from "react-router-dom";
 
 interface Props {
   artistData: Artist;
+  src: string | undefined;
+  fallback: string;
 }
 
-const RenderProfilePicture: FunctionComponent<Props> = function (props) {
+const ImageWithFallback: FunctionComponent<Props> = function (props) {
   if (props.artistData.images.length) {
     return (
       <img
-        src={props.artistData.images.at(1)?.url}
+        src={props.src}
         alt={`${props.artistData.name} profile picture`}
         className="artistPicture"
       />
@@ -18,7 +20,7 @@ const RenderProfilePicture: FunctionComponent<Props> = function (props) {
   }
   return (
     <img
-      src="https://i.scdn.co/image/ab6761610000e5eb55d39ab9c21d506aa52f7021"
+      src={props.fallback}
       alt={`${props.artistData.name} profile picture`}
       className="artistPicture"
     />
@@ -27,7 +29,7 @@ const RenderProfilePicture: FunctionComponent<Props> = function (props) {
 const ArtistResult: FunctionComponent<Props> = function (props) {
   return (
     <div className="artistContainer">
-      {RenderProfilePicture(props)}
+      {ImageWithFallback(props)}
       <Link className="artistName" to={`/artist/${props.artistData.id}`}>
         {props.artistData.name}
       </Link>
