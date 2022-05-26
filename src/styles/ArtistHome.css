@@ -1,0 +1,55 @@
+.artistInfoContainer {
+    display: flex;
+    padding: 15px;
+    border-bottom: rgba(0, 0, 0, 0.1);
+    border-bottom-style: inset;
+}
+
+.artistProfilePicture {
+    border-radius: 50%;
+    width: 210px;
+    margin: 10px;
+}
+
+.nameAndFollowers {
+    margin-left: 34px;
+    margin-top: 30px;
+}
+
+.artistName {
+    font-size: 50px;
+    margin: 10px 0
+}
+
+.followers {
+    font-size: 13px;
+    margin: 10px;
+}
+
+.topTracksList {
+    margin: 40px 15px;
+    max-width: 600px;
+}
+
+.trackContainer {
+    padding: 10px;
+    margin: 15px;
+    background-color: white;
+    display: flex;
+    align-items: center
+}
+
+.trackContainer:hover {
+    background-color: rgb(15, 15, 15);
+    color: rgb(245, 245, 245);
+}
+
+.topTrackCover {
+    width: 64px;
+}
+
+.trackName {
+    font-size: 16px;
+    margin-left: 20px;
+    font-weight: bold;
+}
