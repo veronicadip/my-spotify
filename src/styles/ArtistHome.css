@@ -53,3 +53,12 @@
     margin-left: 20px;
     font-weight: bold;
 }
+
+.albumsList {
+    display: flex;
+}
+
+.artistAlbum {
+    display: flex;
+    flex-direction: column
+}

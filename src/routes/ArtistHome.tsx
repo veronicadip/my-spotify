@@ -8,7 +8,9 @@ import { useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import ArtistTopTrack from "../components/ArtistTopTrack";
-import "../styles/ArtistHome.css"
+import "../styles/ArtistHome.css";
+import ArtistAlbums from "../components/ArtistAlbums";
+import ArtistSingle from "../components/ArtistSingle";
 
 type ArtistHomeParams = {
   artistId: string;
@@ -23,7 +25,9 @@ function ArtistHome() {
   const [topTracks, setTopTracks] = useState<Track[]>();
   const [isLoadingTracks, setIsLoadingTracks] = useState(true);
   const [tracksError, setTracksError] = useState(false);
-
+  const [artistAlbums, setArtistAlbums] = useState<GetArtistAlbumsResponse>();
+  const [isLoadingAlbums, setIsLoadingAlbums] = useState(true);
+  const [albumsError, setAlbumsError] = useState(false);
 
   var spotifyApi = new SpotifyWebApi();
   const accessToken = currentAccessToken;
@@ -52,6 +56,16 @@ function ArtistHome() {
         setTracksError(true);
         setIsLoadingTracks(false);
       });
+    spotifyApi.artists.getArtistAlbums(artistId, { limit: 50, country: "AR" })
+      .then((response) => {
+        setArtistAlbums(response);
+        console.log(response);
+        setIsLoadingAlbums(false);
+      })
+      .catch(() => {
+        setAlbumsError(true);
+        setIsLoadingAlbums(false);
+      })
   }, []);
 
   const renderArtistPicture = () => {
@@ -73,14 +87,14 @@ function ArtistHome() {
   };
 
   const renderArtistHome = () => {
-    if (isLoadingArtist || isLoadingTracks) {
+    if (isLoadingArtist || isLoadingTracks || isLoadingAlbums) {
       return (
         <div className="loadingContainer">
           <CircularProgress color="inherit" className="circularProgress" />
         </div>
       );
     }
-    if (artistError || tracksError) {
+    if (artistError || tracksError || albumsError) {
       return (
         <div>
           <Alert severity="error" className="errorMessage">
@@ -102,6 +116,12 @@ function ArtistHome() {
         <div className="topTracksList">
           {topTracks?.map((track) => (<ArtistTopTrack topTrackInfo={track} key={track.id} />))}
         </div>
+        <h2>Albums</h2>
+        <div className="albumsList">
+          {artistAlbums?.items.map((album) => (<ArtistAlbums artistAlbum={album} key={album.id} />))}
+        </div>
+        <h2>Singles</h2>
+        {artistAlbums?.items.map((single) => (<ArtistSingle artistSingle={single} key={single.id} />))}
       </div>
     );
   };
