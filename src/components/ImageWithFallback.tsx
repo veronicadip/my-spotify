@@ -4,7 +4,7 @@ interface Props {
   src: string | undefined;
   fallback: string;
   alt: string;
-  className: string;
+  className?: string;
   imagesArray: number | undefined;
 }
 

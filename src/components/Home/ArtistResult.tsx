@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Artist } from "spotify-web-api-ts/types/types/SpotifyObjects";
 import { Link } from "react-router-dom";
-import ImageWithFallback from "./ImageWithFallback";
+import ImageWithFallback from "../ImageWithFallback";
 
 interface Props {
   artistData: Artist;
