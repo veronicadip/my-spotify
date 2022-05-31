@@ -6,6 +6,7 @@ import ArtistHome from "./routes/ArtistHome";
 import Album from "./routes/Album";
 import "./styles/index.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import SongHome from "./routes/SongHome";
 
 const darkTheme = createTheme({
   palette: {
@@ -23,6 +24,10 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/artist/:artistId" element={<ArtistHome />} />
         <Route path="/artist/:artistId/album/:albumId" element={<Album />} />
+        <Route
+          path="/artist/:artistId/album/:albumId/song/:songId"
+          element={<SongHome />}
+        />
       </Routes>
     </ThemeProvider>
   </BrowserRouter>
