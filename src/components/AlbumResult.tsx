@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import { SimplifiedAlbum } from "spotify-web-api-ts/types/types/SpotifyObjects";
 import ImageWithFallback from "./ImageWithFallback";
+import { Link } from "react-router-dom";
 
 interface Props {
   albumData: SimplifiedAlbum;
@@ -20,7 +21,7 @@ const AlbumResult: FunctionComponent<Props> = function (props) {
         />
       </div>
       <div className="albumInfo">
-        <p className="albumName">{props.albumData.name}</p>
+        <Link to="/artist/:artistId/album/:albumId" className="albumName">{props.albumData.name}</Link>
         <p className="albumArtist">
           {props.albumData.artists.map((artist) => artist.name).join(", ")}
         </p>
