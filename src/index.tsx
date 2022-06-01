@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import Home from "./routes/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ArtistHome from "./routes/ArtistHome";
-import Album from "./routes/Album";
+import AlbumHome from "./routes/AlbumHome";
 import "./styles/index.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import NotFound from "./routes/NotFound";
@@ -23,7 +23,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/artist/:artistId" element={<ArtistHome />} />
-        <Route path="/artist/:artistId/album/:albumId" element={<Album />} />
+        <Route path="/artist/:artistId/album/:albumId" element={<AlbumHome />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </ThemeProvider>

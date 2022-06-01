@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { Track } from "spotify-web-api-ts/types/types/SpotifyObjects";
-import ImageWithFallback from "./ImageWithFallback";
+import ImageWithFallback from "../ImageWithFallback";
 
 interface Props {
   songData: Track;

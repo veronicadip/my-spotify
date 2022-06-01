@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { SimplifiedAlbum } from "spotify-web-api-ts/types/types/SpotifyObjects.js";
-import ImageWithFallback from "./ImageWithFallback";
+import ImageWithFallback from "../ImageWithFallback";
 
 interface Props {
   artistSingle: SimplifiedAlbum;
