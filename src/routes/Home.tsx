@@ -34,6 +34,7 @@ function Home() {
         .search(query, ["artist", "album", "track"], { limit: 5 })
         .then((response) => {
           setSearchResults(response);
+          console.log(response)
           setIsLoadingSearch(false);
         })
         .catch(() => {
