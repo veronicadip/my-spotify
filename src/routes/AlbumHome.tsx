@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import currentAccessToken from "../lib/accessToken";
 import SearchAppBar from "../components/TopOfPage";
@@ -71,14 +71,14 @@ function AlbumHome() {
   }, []);
 
   const renderAlbumHome = () => {
-    if (isLoadingAlbum) {
+    if (isLoadingAlbum || loadingArtist || loadingArtistAlbums) {
       return (
         <div className="loadingContainer">
           <CircularProgress color="inherit" className="circularProgress" />
         </div>
       );
     }
-    if (albumError) {
+    if (albumError || artistAlbumsError || artistError) {
       return (
         <div>
           <Alert severity="error" className="errorMessage">
