@@ -104,7 +104,7 @@ describe("<Home>", function () {
 
   it("renders results", async () => {
     mockSearch.mockResolvedValue({
-      albums: [albums],
+      albums: { items: albums },
     });
 
     await act(async () => {
@@ -116,23 +116,23 @@ describe("<Home>", function () {
     });
 
     await waitFor(() => {
-      screen.getByText(/As It Was/i);
+      screen.getByText(/Harry's House/i);
     });
   });
 });
 
-//   it("renders loading component when the data is loading", async () => {
-//     mockSearch.mockResolvedValue(() => {});
+it("renders loading component when the data is loading", async () => {
+  mockSearch.mockReturnValue(new Promise(() => {}));
 
-//     await act(async () => {
-//       await renderWithRouter(<Home />);
-//     });
+  await act(async () => {
+    await renderWithRouter(<Home />);
+  });
 
-//     await act(async () => {
-//       userEvent.type(screen.getByRole("textbox"), "x");
-//     });
+  await act(async () => {
+    userEvent.type(screen.getByRole("textbox"), "x");
+  });
 
-//     await waitFor(() => {
-//       screen.getByText("circularProgress");
-//     });
-//   });
+  await waitFor(() => {
+    screen.getByRole("progressbar");
+  });
+});

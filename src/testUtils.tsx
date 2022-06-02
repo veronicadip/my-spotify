@@ -31,13 +31,9 @@ const artist = {
 
 const album = {
   album_type: "album",
-  artists: [
-    {
-      artist,
-    },
-  ],
-  name: "Harry's House",
+  artists: [{ artist }],
   id: "123asdasd",
+  name: "Harry's House",
   images: [
     {
       url: "https://i.scdn.co/image/ab67616d0000b273b46f74097655d7f353caab14",
@@ -49,18 +45,6 @@ const album = {
       url: "https://i.scdn.co/image/ab67616d00004851b46f74097655d7f353caab14",
     },
   ],
-  tracks: {
-    items: [
-      {
-        artists: [{ artist }],
-        duration_ms: 194985,
-        id: "zxczxc234",
-        name: "As It Was",
-        preview_url:
-          "https://p.scdn.co/mp3-preview/c871f7a3b36ad708640a833fbf7a0b9e84c5b688?cid=e26e4e3168be4fc3b9a9c766601fa05a",
-      },
-    ],
-  },
 };
 
 const track = {
