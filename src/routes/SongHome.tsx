@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import currentAccessToken from "../lib/accessToken";
-import { Track } from "spotify-web-api-ts/types/types/SpotifyObjects";
+import { Artist, Track, SimplifiedTrack } from "spotify-web-api-ts/types/types/SpotifyObjects";
 import SearchAppBar from "../components/TopOfPage";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
@@ -20,6 +20,9 @@ function SongHome() {
   const [songInfo, setSongInfo] = useState<Track>();
   const [isLoadingSong, setIsLoadingSong] = useState(true);
   const [songError, setSongError] = useState(false);
+  const [songArtist, setSongArtist] = useState<Artist>();
+  const [isLoadingArtist, setIsLoadingArtist] = useState(true);
+  const [artistError, setArtistError] = useState(false);
   const albumCoverFallback =
     "https://tidal.com/browse/assets/images/defaultImages/defaultPlaylistImage.png";
   const artistPictureFallback =
@@ -41,15 +44,25 @@ function SongHome() {
         setSongError(true);
         setIsLoadingSong(false);
       });
+    spotifyApi.artists.getArtist(artistId)
+      .then((response) => {
+        setSongArtist(response);
+        console.log(response);
+        setIsLoadingArtist(false);
+      })
+      .catch(() => {
+        setArtistError(true);
+        setIsLoadingArtist(false);
+      })
   }, []);
 
   const renderSongHome = () => {
-    if (isLoadingSong) {
+    if (isLoadingSong || isLoadingArtist) {
       <div className="loadingContainer">
         <CircularProgress color="inherit" className="circularProgress" />
       </div>;
     }
-    if (songError) {
+    if (songError || artistError) {
       <div>
         <Alert severity="error" className="errorMessage">
           There was an error loading the data, please try again.
@@ -65,9 +78,13 @@ function SongHome() {
           imagesArray={songInfo?.album.images.length}
         />
         <h1>{songInfo?.name}</h1>
-        <Link to={`/artist/${songInfo?.artists.at(0)?.id}`}>
-          {songInfo?.artists.at(0)?.name}
-        </Link>
+        <div>
+          <ImageWithFallback src={songArtist?.images.at(2)?.url} fallback={artistPictureFallback} alt={`${songArtist?.name} profile picture`} imagesArray={songArtist?.images.length} />
+          <Link to={`/artist/${artistId}`}>
+            {songInfo?.artists.at(0)?.name}
+          </Link>
+        </div>
+        <Link to={`/artist/${artistId}/album/${albumId}`}>More of: {songInfo?.album.name}</Link>
       </div>
     );
   };
