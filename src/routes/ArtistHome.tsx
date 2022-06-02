@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import currentAccessToken from "../lib/accessToken";
 import { Artist, Track } from "spotify-web-api-ts/types/types/SpotifyObjects";
@@ -7,10 +7,10 @@ import SearchAppBar from "../components/TopOfPage";
 import { useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import ArtistTopTrack from "../components/ArtistTopTrack";
+import ArtistTopTrack from "../components/ArtistHome/ArtistTopTrack";
 import "../styles/ArtistHome.css";
-import ArtistAlbums from "../components/ArtistAlbums";
-import ArtistSingle from "../components/ArtistSingle";
+import ArtistAlbums from "../components/ArtistHome/ArtistAlbums";
+import ArtistSingle from "../components/ArtistHome/ArtistSingle";
 import ImageWithFallback from "../components/ImageWithFallback";
 
 type ArtistHomeParams = {
