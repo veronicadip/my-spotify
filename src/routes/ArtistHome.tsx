@@ -43,6 +43,7 @@ function ArtistHome() {
       .getArtist(artistId)
       .then((response) => {
         setArtistInfo(response);
+        console.log(response);
         setIsLoadingArtist(false);
       })
       .catch(() => {

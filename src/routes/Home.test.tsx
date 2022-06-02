@@ -1,19 +1,21 @@
 import Home from "../routes/Home";
-import { renderWithRouter } from "../testUtils";
+import { renderWithRouter, artists, albums, tracks } from "../testUtils";
 import { act } from "react-dom/test-utils";
-import SpotifyWebApi from "spotify-web-api-js";
+import { screen } from "@testing-library/dom";
+import userEvent from "@testing-library/user-event";
+import { waitFor } from "@testing-library/react";
 
-jest.mock("spotify-web-api-ts");
+const mockSearch = jest.fn();
+
+jest.mock("spotify-web-api-ts", () => ({
+  SpotifyWebApi: function () {
+    return { search: { search: mockSearch }, setAccessToken: jest.fn() };
+  },
+}));
 
 describe("<Home>", function () {
-  const searchMock = jest.fn();
-
-  jest.spyOn(SpotifyWebApi.prototype, "search").mockReturnValue({
-    search: searchMock,
-  });
-
   beforeEach(() => {
-    searchMock.mockClear();
+    mockSearch.mockClear();
   });
 
   it("renders without crashing", async () => {
@@ -22,31 +24,115 @@ describe("<Home>", function () {
     });
   });
 
-  it("renders an empty message when no results are found", async () => {
-    searchMock.mockResolvedValue({ albums: [], artists: [], tracks: [] });
+  it("renders an empty message when no song results are found", async () => {
+    mockSearch.mockResolvedValue({
+      albums: { items: [] },
+      artists: { items: [] },
+      tracks: { items: [] },
+    });
 
     await act(async () => {
       await renderWithRouter(<Home />);
-      // TODO: check message when empty
+    });
+
+    await act(async () => {
+      userEvent.type(screen.getByRole("textbox"), "zzxcvpo");
+    });
+
+    await waitFor(() =>
+      screen.getByText(/There aren't any songs with the name "zzxcvpo"/i)
+    );
+  });
+
+  it("renders an empty message when no album results are found", async () => {
+    mockSearch.mockResolvedValue({
+      albums: { items: [] },
+      artists: { items: [] },
+      tracks: { items: [] },
+    });
+
+    await act(async () => {
+      await renderWithRouter(<Home />);
+    });
+
+    await act(async () => {
+      userEvent.type(screen.getByRole("textbox"), "zzxcvpo");
+    });
+
+    await waitFor(() => {
+      screen.getByText(/There aren't any albums with the name "zzxcvpo"/i);
+    });
+  });
+
+  it("renders an empty message when no artist results are found", async () => {
+    mockSearch.mockResolvedValue({
+      albums: { items: [] },
+      artists: { items: [] },
+      tracks: { items: [] },
+    });
+
+    await act(async () => {
+      await renderWithRouter(<Home />);
+    });
+
+    await act(async () => {
+      userEvent.type(screen.getByRole("textbox"), "zzxcvpo");
+    });
+
+    await waitFor(() => {
+      screen.getByText(/There aren't any artists with the name "zzxcvpo"/i);
     });
   });
 
   it("renders an error message on errors", async () => {
-    searchMock.mockRejectedValue({});
+    mockSearch.mockRejectedValue({});
 
     await act(async () => {
       await renderWithRouter(<Home />);
-      // TODO: check error message
+    });
+
+    await act(async () => {
+      userEvent.type(screen.getByRole("textbox"), "x");
+    });
+
+    await waitFor(() => {
+      screen.getByText(
+        /There was an error loading the data, please try again./i
+      );
     });
   });
 
   it("renders results", async () => {
-    searchMock.mockResolvedValue({
-      albums: [],
+    mockSearch.mockResolvedValue({
+      albums: [albums],
     });
 
     await act(async () => {
       await renderWithRouter(<Home />);
     });
+
+    await act(async () => {
+      userEvent.type(screen.getByRole("textbox"), "Harry");
+    });
+
+    await waitFor(() => {
+      screen.getByText(/As It Was/i);
+    });
   });
 });
+
+//   it("renders loading component when the data is loading", async () => {
+//     mockSearch.mockResolvedValue(() => {});
+
+//     await act(async () => {
+//       await renderWithRouter(<Home />);
+//     });
+
+//     await act(async () => {
+//       userEvent.type(screen.getByRole("textbox"), "x");
+//     });
+
+//     await waitFor(() => {
+//       screen.getByText("circularProgress");
+//     });
+//   });
