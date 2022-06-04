@@ -105,6 +105,8 @@ describe("<Home>", function () {
   it("renders results", async () => {
     mockSearch.mockResolvedValue({
       albums: { items: albums },
+      artists: { items: artists },
+      tracks: { items: tracks }
     });
 
     await act(async () => {
@@ -118,11 +120,19 @@ describe("<Home>", function () {
     await waitFor(() => {
       screen.getByText(/Harry's House/i);
     });
+
+    await waitFor(() => {
+      screen.getByText(/Harry Styles/i)
+    });
+
+    await waitFor(() => {
+      screen.getByText(/As It Was/i)
+    })
   });
 });
 
 it("renders loading component when the data is loading", async () => {
-  mockSearch.mockReturnValue(new Promise(() => {}));
+  mockSearch.mockReturnValue(new Promise(() => { }));
 
   await act(async () => {
     await renderWithRouter(<Home />);
@@ -136,3 +146,13 @@ it("renders loading component when the data is loading", async () => {
     screen.getByRole("progressbar");
   });
 });
+
+it("renders a welcome message before the user make a search", async () => {
+  await act(async () => {
+    await renderWithRouter(<Home />)
+  })
+
+  await waitFor(() => {
+    screen.getByText(/Search here the music that you want!/i)
+  })
+})

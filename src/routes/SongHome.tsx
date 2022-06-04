@@ -37,7 +37,6 @@ function SongHome() {
       .getTrack(songId)
       .then((response) => {
         setSongInfo(response);
-        console.log(response);
         setIsLoadingSong(false);
       })
       .catch(() => {
@@ -47,7 +46,6 @@ function SongHome() {
     spotifyApi.artists.getArtist(artistId)
       .then((response) => {
         setSongArtist(response);
-        console.log(response);
         setIsLoadingArtist(false);
       })
       .catch(() => {
