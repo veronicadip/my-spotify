@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import currentAccessToken from "../lib/accessToken";
-import { Artist, Track, SimplifiedTrack } from "spotify-web-api-ts/types/types/SpotifyObjects";
+import { Artist, Track, Album } from "spotify-web-api-ts/types/types/SpotifyObjects";
 import SearchAppBar from "../components/TopOfPage";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import ImageWithFallback from "../components/ImageWithFallback";
 import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 type SongHomeParams = {
   artistId: string;
@@ -23,6 +24,10 @@ function SongHome() {
   const [songArtist, setSongArtist] = useState<Artist>();
   const [isLoadingArtist, setIsLoadingArtist] = useState(true);
   const [artistError, setArtistError] = useState(false);
+  const [songAlbum, setSongAlbum] = useState<Album>();
+  const [isLoadingAlbum, setIsLoadingAlbum] = useState(true);
+  const [albumError, setAlbumError] = useState(false);
+  const [songPlaying, setSongPlaying] = useState<string | undefined>();
   const albumCoverFallback =
     "https://tidal.com/browse/assets/images/defaultImages/defaultPlaylistImage.png";
   const artistPictureFallback =
@@ -37,7 +42,6 @@ function SongHome() {
       .getTrack(songId)
       .then((response) => {
         setSongInfo(response);
-        console.log(response);
         setIsLoadingSong(false);
       })
       .catch(() => {
@@ -47,22 +51,38 @@ function SongHome() {
     spotifyApi.artists.getArtist(artistId)
       .then((response) => {
         setSongArtist(response);
-        console.log(response);
         setIsLoadingArtist(false);
       })
       .catch(() => {
         setArtistError(true);
         setIsLoadingArtist(false);
       })
+    spotifyApi.albums.getAlbum(albumId)
+      .then((response) => {
+        setSongAlbum(response);
+        console.log(response);
+        setIsLoadingAlbum(false);
+      })
+      .catch(() => {
+        setAlbumError(true);
+        setIsLoadingAlbum(false);
+      })
   }, []);
 
+
+  const playSongHandler = () => {
+    setSongPlaying(songAlbum?.tracks.items.find((song) => song.id === songId)?.preview_url)
+  }
+
+
+
   const renderSongHome = () => {
-    if (isLoadingSong || isLoadingArtist) {
+    if (isLoadingSong || isLoadingArtist || isLoadingAlbum) {
       <div className="loadingContainer">
         <CircularProgress color="inherit" className="circularProgress" />
       </div>;
     }
-    if (songError || artistError) {
+    if (songError || artistError || albumError) {
       <div>
         <Alert severity="error" className="errorMessage">
           There was an error loading the data, please try again.
@@ -78,6 +98,7 @@ function SongHome() {
           imagesArray={songInfo?.album.images.length}
         />
         <h1>{songInfo?.name}</h1>
+        <Button variant="contained" color="secondary" onClick={playSongHandler}>Play</Button>
         <div>
           <ImageWithFallback src={songArtist?.images.at(2)?.url} fallback={artistPictureFallback} alt={`${songArtist?.name} profile picture`} imagesArray={songArtist?.images.length} />
           <Link to={`/artist/${artistId}`}>
