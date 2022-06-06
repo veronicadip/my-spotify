@@ -43,7 +43,6 @@ function ArtistHome() {
       .getArtist(artistId)
       .then((response) => {
         setArtistInfo(response);
-        console.log(response);
         setIsLoadingArtist(false);
       })
       .catch(() => {
@@ -54,7 +53,6 @@ function ArtistHome() {
       .getArtistTopTracks(artistId, "AR")
       .then((response) => {
         setTopTracks(response);
-        console.log(response)
         setIsLoadingTracks(false);
       })
       .catch(() => {
@@ -65,7 +63,6 @@ function ArtistHome() {
       .getArtistAlbums(artistId, { limit: 50, country: "AR" })
       .then((response) => {
         setArtistAlbums(response);
-        console.log(response)
         setIsLoadingAlbums(false);
       })
       .catch(() => {

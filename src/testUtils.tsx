@@ -35,6 +35,7 @@ export const artist = {
 
 const album = {
     album_type: "album",
+    album_group: "album",
     artists: [{ artist }],
     id: "123asdasd",
     name: "Harry's House",
@@ -61,5 +62,25 @@ const track = {
         "https://p.scdn.co/mp3-preview/c871f7a3b36ad708640a833fbf7a0b9e84c5b688?cid=e26e4e3168be4fc3b9a9c766601fa05a",
 };
 
+const single = {
+    album_group: "single",
+    album_type: "single",
+    artists: [{ artist }],
+    duration_ms: 209384,
+    id: "aaaaa111",
+    images: [
+        {
+            url: "https://i.scdn.co/image/ab67616d0000b273b46f74097655d7f353caab14"
+        },
+        {
+            url: "https://i.scdn.co/image/ab67616d00001e02b46f74097655d7f353caab14"
+        },
+        {
+            url: "https://i.scdn.co/image/ab67616d00004851b46f74097655d7f353caab14"
+        }
+    ],
+    name: "Matilda"
+}
+
 export const tracks = [track];
-export const albums = [album]
+export const albums = [album, single]

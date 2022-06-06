@@ -20,29 +20,94 @@ describe("<ArtistHome>", function () {
         mockGetArtist.mockClear();
         mockGetArtistTopTracks.mockClear()
     })
+    it("renders without crashing", async () => {
+        mockGetArtist.mockResolvedValue(artist)
+        mockGetArtistTopTracks.mockResolvedValue(tracks)
+        mockGetArtistAlbums.mockResolvedValue({
+            items: albums
+        })
+        await act(async () => {
+            await renderArtistHomeWithRouter(<ArtistHome />)
+        })
+    })
+
+    it("renders an error message on errors with GetArtist function", async () => {
+        mockGetArtist.mockRejectedValue({})
+        mockGetArtistTopTracks.mockResolvedValue(tracks)
+        mockGetArtistAlbums.mockResolvedValue({
+            items: albums
+        })
+        await act(async () => {
+            await renderArtistHomeWithRouter(<ArtistHome />)
+        })
+        await waitFor(() => {
+            screen.getByText(/There was an error loading the data, please try again./i)
+        })
+    })
+
+    it("renders an error message on errors with GetArtistTopTracks function", async () => {
+        mockGetArtist.mockResolvedValue(artist)
+        mockGetArtistTopTracks.mockRejectedValue({})
+        mockGetArtistAlbums.mockResolvedValue({
+            items: albums
+        })
+        await act(async () => {
+            await renderArtistHomeWithRouter(<ArtistHome />)
+        })
+        await waitFor(() => {
+            screen.getByText(/There was an error loading the data, please try again./i)
+        })
+    })
+
+    it("renders an error message on errors with GetArtistAlbums", async () => {
+        mockGetArtist.mockResolvedValue(artist)
+        mockGetArtistTopTracks.mockResolvedValue(tracks)
+        mockGetArtistAlbums.mockRejectedValue({})
+
+        await act(async () => {
+            await renderArtistHomeWithRouter(<ArtistHome />)
+        })
+        await waitFor(() => {
+            screen.getByText(/There was an error loading the data, please try again./i)
+        })
+    })
+
+    it("renders loading component when the data is loading", async () => {
+        mockGetArtist.mockReturnValue(new Promise(() => { }))
+        mockGetArtistTopTracks.mockReturnValue(new Promise(() => { }))
+        mockGetArtistAlbums.mockReturnValue(new Promise(() => { }))
+
+        await act(async () => {
+            await renderArtistHomeWithRouter(<ArtistHome />)
+        })
+        await waitFor(() => {
+            screen.getByRole("progressbar")
+        })
+    })
+
+    it("renders the artist data", async () => {
+        mockGetArtist.mockResolvedValue(artist)
+        mockGetArtistTopTracks.mockResolvedValue(tracks)
+        mockGetArtistAlbums.mockResolvedValue({
+            items: albums
+        })
+
+        await act(async () => {
+            await renderArtistHomeWithRouter(<ArtistHome />)
+        })
+        await waitFor(() => {
+            screen.getByText(/Harry Styles/i)
+        })
+        await waitFor(() => {
+            screen.getByText(/As It Was/i)
+        })
+        await waitFor(() => {
+            screen.getByText(/Harry's House/i)
+        })
+        await waitFor(() => {
+            screen.getByText(/Matilda/i)
+        })
+    })
 })
 
-it("renders without crashing", async () => {
-    mockGetArtist.mockResolvedValue(artist)
-    mockGetArtistTopTracks.mockResolvedValue(tracks)
-    mockGetArtistAlbums.mockResolvedValue({
-        items: albums
-    })
-    await act(async () => {
-        await renderArtistHomeWithRouter(<ArtistHome />)
-    })
-})
 
-it("renders an error message on errors with GetArtist function", async () => {
-    mockGetArtist.mockRejectedValue({})
-    mockGetArtistTopTracks.mockResolvedValue(tracks)
-    mockGetArtistAlbums.mockResolvedValue({
-        items: albums
-    })
-    await act(async () => {
-        await renderArtistHomeWithRouter(<ArtistHome />)
-    })
-    await waitFor(() => {
-        screen.getByText(/There was an error loading the data, please try again./i)
-    })
-})
