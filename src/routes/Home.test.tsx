@@ -129,30 +129,31 @@ describe("<Home>", function () {
       screen.getByText(/As It Was/i)
     })
   });
+  it("renders loading component when the data is loading", async () => {
+    mockSearch.mockReturnValue(new Promise(() => { }));
+
+    await act(async () => {
+      await renderWithRouter(<Home />);
+    });
+
+    await act(async () => {
+      userEvent.type(screen.getByRole("textbox"), "x");
+    });
+
+    await waitFor(() => {
+      screen.getByRole("progressbar");
+    });
+  });
+
+  it("renders a welcome message before the user make a search", async () => {
+    await act(async () => {
+      await renderWithRouter(<Home />)
+    })
+
+    await waitFor(() => {
+      screen.getByText(/Search here the music that you want!/i)
+    })
+  })
 });
 
-it("renders loading component when the data is loading", async () => {
-  mockSearch.mockReturnValue(new Promise(() => { }));
 
-  await act(async () => {
-    await renderWithRouter(<Home />);
-  });
-
-  await act(async () => {
-    userEvent.type(screen.getByRole("textbox"), "x");
-  });
-
-  await waitFor(() => {
-    screen.getByRole("progressbar");
-  });
-});
-
-it("renders a welcome message before the user make a search", async () => {
-  await act(async () => {
-    await renderWithRouter(<Home />)
-  })
-
-  await waitFor(() => {
-    screen.getByText(/Search here the music that you want!/i)
-  })
-})
