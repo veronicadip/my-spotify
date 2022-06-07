@@ -1,6 +1,6 @@
 import Home from "../routes/Home";
 import { SpotifyWebApi } from "spotify-web-api-ts";
-import renderWithRouter from "../testUtils"
+import { renderWithRouter } from "../testUtils"
 import { act } from "react-dom/test-utils";
 
 
