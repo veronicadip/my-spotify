@@ -1,5 +1,5 @@
 import AlbumHome from "./AlbumHome";
-import { renderAlbumHomeWithRouter, album, albums, artist } from "../testUtils";
+import { renderWithRouter, album, albums, artist } from "../testUtils";
 import { act, waitFor } from "@testing-library/react";
 import { screen } from "@testing-library/dom";
 
@@ -26,7 +26,7 @@ describe("<AlbumHome>", function () {
         mockGetArtist.mockResolvedValue(artist)
 
         await act(async () => {
-            await renderAlbumHomeWithRouter(<AlbumHome />)
+            await renderWithRouter(<AlbumHome />, { route: "/artist/:artistId/album/:albumId" })
         })
     })
 
@@ -36,7 +36,7 @@ describe("<AlbumHome>", function () {
         mockGetArtist.mockResolvedValue(artist)
 
         await act(async () => {
-            await renderAlbumHomeWithRouter(<AlbumHome />)
+            await renderWithRouter(<AlbumHome />, { route: "/artist/:artistId/album/:albumId" })
         })
         await waitFor(() => {
             screen.getByText(/There was an error loading the data, please try again./i)
@@ -49,7 +49,7 @@ describe("<AlbumHome>", function () {
         mockGetArtist.mockResolvedValue(artist)
 
         await act(async () => {
-            await renderAlbumHomeWithRouter(<AlbumHome />)
+            await renderWithRouter(<AlbumHome />, { route: "/artist/:artistId/album/:albumId" })
         })
         await waitFor(() => {
             screen.getByText(/There was an error loading the data, please try again./i)
@@ -62,7 +62,7 @@ describe("<AlbumHome>", function () {
         mockGetArtist.mockRejectedValue({})
 
         await act(async () => {
-            await renderAlbumHomeWithRouter(<AlbumHome />)
+            await renderWithRouter(<AlbumHome />, { route: "/artist/:artistId/album/:albumId" })
         })
         await waitFor(() => {
             screen.getByText(/There was an error loading the data, please try again./i)
@@ -75,7 +75,7 @@ describe("<AlbumHome>", function () {
         mockGetArtist.mockReturnValue(new Promise(() => { }))
 
         await act(async () => {
-            await renderAlbumHomeWithRouter(<AlbumHome />)
+            await renderWithRouter(<AlbumHome />, { route: "/artist/:artistId/album/:albumId" })
         })
         await waitFor(() => {
             screen.getByRole("progressbar")
@@ -88,7 +88,7 @@ describe("<AlbumHome>", function () {
         mockGetArtist.mockResolvedValue(artist)
 
         await act(async () => {
-            await renderAlbumHomeWithRouter(<AlbumHome />)
+            await renderWithRouter(<AlbumHome />, { route: "/artist/:artistId/album/:albumId" })
         })
         await waitFor(() => {
             screen.getAllByText(/Harry's House/i)

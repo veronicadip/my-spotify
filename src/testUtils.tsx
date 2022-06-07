@@ -6,11 +6,6 @@ export const renderWithRouter = async (component: JSX.Element, { route = "/" } =
     return render(component, { wrapper: BrowserRouter })
 }
 
-export const renderAlbumHomeWithRouter = async (component: JSX.Element, { route = "/artist/:artistId/album/:albumId" } = {}) => {
-    window.history.pushState({}, "Test page", route);
-    return render(component, { wrapper: BrowserRouter })
-}
-
 export const artist = {
     followers: {
         total: 2100000,
