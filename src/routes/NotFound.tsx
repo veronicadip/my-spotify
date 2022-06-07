@@ -1,4 +1,3 @@
-import React from "react";
 import SearchAppBar from "../components/TopOfPage";
 import { Link } from "react-router-dom";
 
