@@ -1,6 +1,6 @@
 import AlbumHome from "./AlbumHome";
 import { renderWithRouter, album, albums, artist } from "../testUtils";
-import { act, waitFor } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import { screen } from "@testing-library/dom";
 
 const mockGetAlbum = jest.fn();
@@ -38,9 +38,7 @@ describe("<AlbumHome>", function () {
         await act(async () => {
             await renderWithRouter(<AlbumHome />, { route: "/artist/:artistId/album/:albumId" })
         })
-        await waitFor(() => {
-            screen.getByText(/There was an error loading the data, please try again./i)
-        })
+        screen.getByText(/There was an error loading the data, please try again./i)
     })
 
     it("renders an error message on errors with getArtistAlbums function", async () => {
@@ -51,9 +49,7 @@ describe("<AlbumHome>", function () {
         await act(async () => {
             await renderWithRouter(<AlbumHome />, { route: "/artist/:artistId/album/:albumId" })
         })
-        await waitFor(() => {
-            screen.getByText(/There was an error loading the data, please try again./i)
-        })
+        screen.getByText(/There was an error loading the data, please try again./i)
     })
 
     it("renders an error message on errors with getArtist", async () => {
@@ -64,9 +60,7 @@ describe("<AlbumHome>", function () {
         await act(async () => {
             await renderWithRouter(<AlbumHome />, { route: "/artist/:artistId/album/:albumId" })
         })
-        await waitFor(() => {
-            screen.getByText(/There was an error loading the data, please try again./i)
-        })
+        screen.getByText(/There was an error loading the data, please try again./i)
     })
 
     it("renders loading component when the data is loading", async () => {
@@ -77,9 +71,7 @@ describe("<AlbumHome>", function () {
         await act(async () => {
             await renderWithRouter(<AlbumHome />, { route: "/artist/:artistId/album/:albumId" })
         })
-        await waitFor(() => {
-            screen.getByRole("progressbar")
-        })
+        screen.getByRole("progressbar")
     })
 
     it("renders the album data", async () => {
@@ -90,20 +82,10 @@ describe("<AlbumHome>", function () {
         await act(async () => {
             await renderWithRouter(<AlbumHome />, { route: "/artist/:artistId/album/:albumId" })
         })
-        await waitFor(() => {
-            screen.getAllByText(/Harry's House/i)
-        })
-        await waitFor(() => {
-            screen.getByText(/1. As It Was/i)
-        })
-        await waitFor(() => {
-            screen.getByText(/3:38/i)
-        })
-        await waitFor(() => {
-            screen.getAllByText(/Harry Styles/i)
-        })
-        await waitFor(() => {
-            screen.getByText(/More albums by Harry Styles/i)
-        })
+        screen.getAllByText(/Harry's House/i)
+        screen.getByText(/1. As It Was/i)
+        screen.getByText(/3:38/i)
+        screen.getAllByText(/Harry Styles/i)
+        screen.getByText(/More albums by Harry Styles/i)
     })
 })
