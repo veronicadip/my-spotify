@@ -129,6 +129,7 @@ describe("<Home>", function () {
       screen.getByText(/As It Was/i)
     })
   });
+
   it("renders loading component when the data is loading", async () => {
     mockSearch.mockReturnValue(new Promise(() => { }));
 
@@ -150,9 +151,7 @@ describe("<Home>", function () {
       await renderWithRouter(<Home />)
     })
 
-    await waitFor(() => {
-      screen.getByText(/Search here the music that you want!/i)
-    })
+    screen.getByText(/Search here the music that you want!/i)
   })
 });
 
