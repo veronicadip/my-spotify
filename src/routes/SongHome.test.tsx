@@ -1,7 +1,6 @@
 import SongHome from "./SongHome";
 import { renderWithRouter, track, artist } from "../testUtils";
 import { act } from "react-dom/test-utils";
-import { waitFor } from "@testing-library/react";
 import { screen } from "@testing-library/dom";
 
 const mockGetTrack = jest.fn();
@@ -35,9 +34,7 @@ describe("<SongHome>", function () {
         await act(async () => {
             await renderWithRouter(<SongHome />, { route: "/artist/:artistId/album/:albumId/song/:songId" })
         })
-        await waitFor(() => {
-            screen.getByText(/There was an error loading the data, please try again./i)
-        })
+        screen.getByText(/There was an error loading the data, please try again./i)
     })
 
     it("renders an error message on errors with getArtist function", async () => {
@@ -47,9 +44,7 @@ describe("<SongHome>", function () {
         await act(async () => {
             await renderWithRouter(<SongHome />, { route: "/artist/:artistId/album/:albumId/song/:songId" })
         })
-        await waitFor(() => {
-            screen.getByText(/There was an error loading the data, please try again./i)
-        })
+        screen.getByText(/There was an error loading the data, please try again./i)
     })
 
     it("renders loading component when the data is loading", async () => {
@@ -59,9 +54,7 @@ describe("<SongHome>", function () {
         await act(async () => {
             await renderWithRouter(<SongHome />, { route: "/artist/:artistId/album/:albumId/song/:songId" })
         })
-        await waitFor(() => {
-            screen.getByRole("progressbar")
-        })
+        screen.getByRole("progressbar")
     })
 
     it("renders the song data", async () => {
@@ -71,14 +64,8 @@ describe("<SongHome>", function () {
         await act(async () => {
             await renderWithRouter(<SongHome />, { route: "/artist/:artistId/album/:albumId/song/:songId" })
         })
-        await waitFor(() => {
-            screen.getByText(/As It Was/i)
-        })
-        await waitFor(() => {
-            screen.getByText(/Harry Styles/i)
-        })
-        await waitFor(() => {
-            screen.getByText(/More of: Harry's House/i)
-        })
+        screen.getByText(/As It Was/i)
+        screen.getByText(/Harry Styles/i)
+        screen.getByText(/More of: Harry's House/i)
     })
 })
