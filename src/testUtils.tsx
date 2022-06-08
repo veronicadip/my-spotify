@@ -25,10 +25,10 @@ export const artist = {
     name: "Harry Styles",
 };
 
-const album = {
+export const album = {
     album_type: "album",
     album_group: "album",
-    artists: [{ artist }],
+    artists: [artist],
     id: "123asdasd",
     name: "Harry's House",
     images: [
@@ -42,16 +42,30 @@ const album = {
             url: "https://i.scdn.co/image/ab67616d00004851b46f74097655d7f353caab14",
         },
     ],
+    tracks: {
+        items: [
+            {
+                artists: [{ artist }],
+                duration_ms: 218577,
+                id: "zxczxc234",
+                name: "As It Was",
+                preview_url:
+                    "https://p.scdn.co/mp3-preview/c871f7a3b36ad708640a833fbf7a0b9e84c5b688?cid=e26e4e3168be4fc3b9a9c766601fa05a",
+                track_number: 1
+            }
+        ]
+    }
 };
 
 const track = {
     album: album,
     artists: [{ artist }],
-    duration_ms: 194985,
+    duration_ms: 218577,
     id: "zxczxc234",
     name: "As It Was",
     preview_url:
         "https://p.scdn.co/mp3-preview/c871f7a3b36ad708640a833fbf7a0b9e84c5b688?cid=e26e4e3168be4fc3b9a9c766601fa05a",
+    track_number: 1
 };
 
 const single = {
@@ -75,4 +89,4 @@ const single = {
 }
 
 export const tracks = [track];
-export const albums = [album, single]
+export const albums = [album, single] 
