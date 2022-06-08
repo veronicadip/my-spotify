@@ -57,9 +57,9 @@ export const album = {
     }
 };
 
-const track = {
+export const track = {
     album: album,
-    artists: [{ artist }],
+    artists: [artist],
     duration_ms: 218577,
     id: "zxczxc234",
     name: "As It Was",
@@ -89,4 +89,4 @@ const single = {
 }
 
 export const tracks = [track];
-export const albums = [album, single] 
+export const albums = [album, single]  
