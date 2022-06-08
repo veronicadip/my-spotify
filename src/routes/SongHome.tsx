@@ -9,6 +9,7 @@ import Alert from "@mui/material/Alert";
 import ImageWithFallback from "../components/ImageWithFallback";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
+import { LayoutContext } from "./FooterLayout";
 
 type SongHomeParams = {
   artistId: string;
@@ -70,9 +71,9 @@ function SongHome() {
   }, []);
 
 
-  const playSongHandler = () => {
-    setSongPlaying(songAlbum?.tracks.items.find((song) => song.id === songId)?.preview_url)
-  }
+  // const playSongHandler = () => {
+  //   setSongPlaying(songAlbum?.tracks.items.find((song) => song.id === songId)?.preview_url)
+  // }
 
 
 
@@ -114,6 +115,12 @@ function SongHome() {
     <div>
       <SearchAppBar />
       {renderSongHome()}
+      <LayoutContext.Consumer>
+        {(playSongHandler) => {
+          return <h1>test</h1>
+          // setSongUrl is a function that will set the song URL in the Layout component
+        }}
+      </LayoutContext.Consumer>
     </div>
   );
 }
