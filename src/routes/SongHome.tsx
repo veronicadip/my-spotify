@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import currentAccessToken from "../lib/accessToken";
@@ -37,7 +37,6 @@ function SongHome() {
       .getTrack(songId)
       .then((response) => {
         setSongInfo(response);
-        console.log(response);
         setIsLoadingSong(false);
       })
       .catch(() => {
@@ -47,7 +46,6 @@ function SongHome() {
     spotifyApi.artists.getArtist(artistId)
       .then((response) => {
         setSongArtist(response);
-        console.log(response);
         setIsLoadingArtist(false);
       })
       .catch(() => {
@@ -58,16 +56,21 @@ function SongHome() {
 
   const renderSongHome = () => {
     if (isLoadingSong || isLoadingArtist) {
-      <div className="loadingContainer">
-        <CircularProgress color="inherit" className="circularProgress" />
-      </div>;
+      return (
+        <div className="loadingContainer">
+          <CircularProgress color="inherit" className="circularProgress" />
+        </div>
+      )
+
     }
     if (songError || artistError) {
-      <div>
-        <Alert severity="error" className="errorMessage">
-          There was an error loading the data, please try again.
-        </Alert>
-      </div>;
+      return (
+        <div>
+          <Alert severity="error" className="errorMessage">
+            There was an error loading the data, please try again.
+          </Alert>
+        </div>
+      )
     }
     return (
       <div>
