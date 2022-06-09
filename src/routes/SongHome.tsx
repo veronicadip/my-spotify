@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import currentAccessToken from "../lib/accessToken";
-import { Artist, Track, SimplifiedTrack } from "spotify-web-api-ts/types/types/SpotifyObjects";
+import { Artist, Track } from "spotify-web-api-ts/types/types/SpotifyObjects";
 import SearchAppBar from "../components/TopOfPage";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import ImageWithFallback from "../components/ImageWithFallback";
 import { Link } from "react-router-dom";
+import Box from '@mui/material/Box';
 
 type SongHomeParams = {
   artistId: string;
@@ -93,10 +94,10 @@ function SongHome() {
   };
 
   return (
-    <div>
+    <Box>
       <SearchAppBar />
       {renderSongHome()}
-    </div>
+    </Box>
   );
 }
 

@@ -10,6 +10,7 @@ import ArtistResult from "../components/Home/ArtistResult";
 import SearchAppBar from "../components/TopOfPageHome";
 import Alert from "@mui/material/Alert";
 import currentAccessToken from "../lib/accessToken";
+import Box from '@mui/material/Box';
 
 function Home() {
   const [searchResults, setSearchResults] = useState<SearchResponse>({});
@@ -134,10 +135,10 @@ function Home() {
   };
 
   return (
-    <div>
+    <Box>
       <SearchAppBar searchHandler={searchHandler} />
       <div className="bodyOfPage">{renderSearchResults()}</div>
-    </div>
+    </Box>
   );
 }
 

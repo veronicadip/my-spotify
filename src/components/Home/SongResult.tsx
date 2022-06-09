@@ -20,9 +20,8 @@ const SongResult: FunctionComponent<Props> = function (props) {
       />
       <div className="songInfo">
         <Link
-          to={`/artist/${props.songData.artists.at(0)?.id}/album/${
-            props.songData.album.id
-          }/song/${props.songData.id}`}
+          to={`/artist/${props.songData.artists.at(0)?.id}/album/${props.songData.album.id
+            }/song/${props.songData.id}`}
         >
           {props.songData.name}
         </Link>
@@ -31,6 +30,7 @@ const SongResult: FunctionComponent<Props> = function (props) {
         </p>
       </div>
     </div>
+
   );
 };
 

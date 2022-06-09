@@ -12,6 +12,8 @@ import "../styles/ArtistHome.css";
 import ArtistAlbums from "../components/ArtistHome/ArtistAlbums";
 import ArtistSingle from "../components/ArtistHome/ArtistSingle";
 import ImageWithFallback from "../components/ImageWithFallback";
+import Box from '@mui/material/Box';
+
 
 type ArtistHomeParams = {
   artistId: string;
@@ -137,10 +139,10 @@ function ArtistHome() {
     );
   };
   return (
-    <div>
+    <Box>
       <SearchAppBar />
       <div className="bodyOfPage">{renderArtistHome()}</div>
-    </div>
+    </Box>
   );
 }
 

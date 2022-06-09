@@ -11,6 +11,8 @@ import AlbumSongs from "../components/AlbumHome/AlbumSongs";
 import { GetArtistAlbumsResponse } from "spotify-web-api-ts/types/types/SpotifyResponses.js";
 import ArtistAlbums from "../components/AlbumHome/ArtistAlbums";
 import { Link } from "react-router-dom";
+import Box from '@mui/material/Box';
+
 
 type AlbumHomeParams = {
   artistId: string;
@@ -128,10 +130,10 @@ function AlbumHome() {
   };
 
   return (
-    <div>
+    <Box>
       <SearchAppBar />
       {renderAlbumHome()}
-    </div>
+    </Box>
   );
 }
 
