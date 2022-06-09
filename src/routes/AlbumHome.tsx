@@ -100,8 +100,7 @@ function AlbumHome() {
             className="albumCoverHome"
             imagesArray={albumInfo?.images.length}
           />
-          <Typography variant="h3">{albumInfo?.name}</Typography>
-          <h1>{albumInfo?.name}</h1>
+          <Typography variant="h3" ml={10}>{albumInfo?.name}</Typography>
         </div>
         <div>
           {albumInfo?.tracks.items.map((song) => (

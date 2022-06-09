@@ -12,7 +12,7 @@ interface Props {
 
 const SongResult: FunctionComponent<Props> = function (props) {
   return (
-    <Grid container>
+    <Grid container mt={4}>
       <ImageWithFallback
         src={props.songData.album.images.at(2)?.url}
         fallback={props.fallback}
@@ -20,7 +20,7 @@ const SongResult: FunctionComponent<Props> = function (props) {
         className="songCover"
         imagesArray={props.songData.album.images.length}
       />
-      <div className="songInfo">
+      <Grid item ml={1.5} mt={1}>
         <Link
           to={`/artist/${props.songData.artists.at(0)?.id}/album/${props.songData.album.id
             }/song/${props.songData.id}`}
@@ -30,7 +30,7 @@ const SongResult: FunctionComponent<Props> = function (props) {
         <Typography variant="subtitle2" gutterBottom mt={0.5}>
           {props.songData.artists.map((artist) => artist.name).join(", ")}
         </Typography>
-      </div>
+      </Grid>
     </Grid>
 
 

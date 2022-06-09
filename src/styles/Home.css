@@ -1,46 +1,5 @@
-h2 {
-  margin-top: 50px;
-}
-
-.albumsList {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.albumContainer {
-  background-color: white;
-  padding: 10px;
-  margin: 15px;
-  width: 200px;
-}
-
-.albumContainer:hover {
-  background-color: rgb(15, 15, 15);
-  color: rgb(245, 245, 245);
-}
 .albumPicture {
   width: 200px;
-}
-
-.albumName {
-  font-weight: bold;
-}
-
-.albumArtist {
-  font-size: small;
-}
-
-.artistsList {
-  display: flex;
-}
-
-.artistContainer {
-  background-color: white;
-  margin: 10px;
-}
-.artistContainer:hover {
-  background-color: rgb(15, 15, 15);
-  color: rgb(245, 245, 245);
 }
 .artistPicture {
   width: 200px;
@@ -50,12 +9,3 @@ h2 {
   object-fit: cover;
 }
 
-.artistName {
-  font-weight: bold;
-  margin-left: 25px;
-  padding-bottom: 15px;
-}
-
-p {
-  margin: 5px;
-}

@@ -2,6 +2,10 @@ import { FunctionComponent } from "react";
 import { Artist } from "spotify-web-api-ts/types/types/SpotifyObjects";
 import { Link } from "react-router-dom";
 import ImageWithFallback from "../ImageWithFallback";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
 
 interface Props {
   artistData: Artist;
@@ -10,7 +14,7 @@ interface Props {
 
 const ArtistResult: FunctionComponent<Props> = function (props) {
   return (
-    <div className="artistContainer">
+    <Grid container mr={2} p={1}>
       <ImageWithFallback
         src={props.artistData.images.at(1)?.url}
         fallback={props.fallback}
@@ -18,10 +22,12 @@ const ArtistResult: FunctionComponent<Props> = function (props) {
         className="artistPicture"
         imagesArray={props.artistData.images.length}
       />
-      <Link className="artistName" to={`/artist/${props.artistData.id}`}>
-        {props.artistData.name}
-      </Link>
-    </div>
+      <Link to={`/artist/${props.artistData.id}`}>
+      <Typography variant="subtitle1" ml={2.5}>{props.artistData.name}</Typography>
+          
+        </Link>
+       
+    </Grid>
   );
 };
 

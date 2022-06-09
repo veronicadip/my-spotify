@@ -9,8 +9,11 @@ import ArtistResult from "../components/Home/ArtistResult";
 import SearchAppBar from "../components/TopOfPageHome";
 import Alert from "@mui/material/Alert";
 import currentAccessToken from "../lib/accessToken";
+import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Container from "@mui/material/Container"
 import Typography from '@mui/material/Typography';
+import "../styles/Home.css"
 
 function Home() {
   const [searchResults, setSearchResults] = useState<SearchResponse>({});
@@ -70,7 +73,7 @@ function Home() {
   const renderAlbums = () => {
     if (searchResults.albums?.items.length) {
       return (
-        <div className="albumsList">
+        <Box display="flex">
           {searchResults.albums?.items.map((album) => (
             <AlbumResult
               albumData={album}
@@ -78,7 +81,7 @@ function Home() {
               key={album.id}
             />
           ))}
-        </div>
+        </Box>
       );
     }
     return <Typography variant="subtitle1" gutterBottom mt={3}>{`There aren't any albums with the name "${searchValue}"`}</Typography>;
@@ -87,7 +90,7 @@ function Home() {
   const renderArtists = () => {
     if (searchResults.artists?.items.length) {
       return (
-        <div className="artistsList">
+        <Box display="flex">
           {searchResults.artists?.items.map((artist) => (
             <ArtistResult
               artistData={artist}
@@ -95,7 +98,7 @@ function Home() {
               key={artist.id}
             />
           ))}
-        </div>
+        </Box>
       );
     }
     return <Typography variant="subtitle1" gutterBottom mt={3}>{`There aren't any artists with the name "${searchValue}"`}</Typography>;
@@ -113,7 +116,7 @@ function Home() {
       if (searchError) {
         return (
           <div>
-            <Alert severity="error" className="errorMessage">
+            <Alert severity="error">
               There was an error loading the data, please try again.
             </Alert>
           </div>
@@ -122,23 +125,34 @@ function Home() {
 
       return (
         <div>
-          <Typography variant="h4" mb={4} mt={4}>Songs</Typography>
-          {renderSongs()}
-          <Typography variant="h4" mb={4} mt={5}>Albums</Typography>
-          {renderAlbums()}
-          <Typography variant="h4" mb={4} mt={5}>Artists</Typography>
-          {renderArtists()}
+          <Typography variant="h4" mb={2} mt={4}>Songs</Typography>
+          <Grid container>
+            {renderSongs()}
+          </Grid>
+          <Typography variant="h4" mb={4} mt={10}>Albums</Typography>
+          <Grid container>
+            {renderAlbums()}
+          </Grid>
+          <Typography variant="h4" mb={3} mt={10}>Artists</Typography>
+          <Grid container>
+            {renderArtists()}
+          </Grid>
         </div>
       );
     }
-    return <Typography variant="h4" mt={8}>Search here the music that you want!</Typography>
+    return <Typography variant="h4" align="center" mt={20}>Search here the music that you want!</Typography>
   };
 
   return (
-    <Box>
+    <div>
       <SearchAppBar searchHandler={searchHandler} />
-      <div className="bodyOfPage">{renderSearchResults()}</div>
-    </Box>
+      <div>
+        <Container maxWidth="xl">
+          {renderSearchResults()}
+        </Container>
+      </div>
+    </div>
+
   );
 }
 
