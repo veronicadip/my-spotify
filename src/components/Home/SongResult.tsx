@@ -2,6 +2,8 @@ import { FunctionComponent } from "react";
 import { Track } from "spotify-web-api-ts/types/types/SpotifyObjects";
 import ImageWithFallback from "../ImageWithFallback";
 import { Link } from "react-router-dom";
+import Grid from '@mui/material/Grid';
+
 
 interface Props {
   songData: Track;
@@ -10,7 +12,7 @@ interface Props {
 
 const SongResult: FunctionComponent<Props> = function (props) {
   return (
-    <div className="songContainer">
+    <Grid container>
       <ImageWithFallback
         src={props.songData.album.images.at(2)?.url}
         fallback={props.fallback}
@@ -29,7 +31,8 @@ const SongResult: FunctionComponent<Props> = function (props) {
           {props.songData.artists.map((artist) => artist.name).join(", ")}
         </p>
       </div>
-    </div>
+    </Grid>
+
 
   );
 };

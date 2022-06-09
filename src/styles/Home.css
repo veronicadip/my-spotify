@@ -30,32 +30,6 @@ h2 {
   font-size: small;
 }
 
-.songContainer {
-  background-color: white;
-  max-width: 600px;
-  margin: 15px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-}
-.songCover {
-  width: 64px;
-}
-.songContainer:hover {
-  background-color: rgb(15, 15, 15);
-  color: rgb(245, 245, 245);
-}
-
-.songInfo {
-  margin-left: 15px;
-}
-.songName {
-  font-size: large;
-}
-.songArtist {
-  font-size: small;
-}
-
 .artistsList {
   display: flex;
 }
