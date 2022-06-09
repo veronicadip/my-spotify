@@ -3,7 +3,7 @@ import { Track } from "spotify-web-api-ts/types/types/SpotifyObjects";
 import ImageWithFallback from "../ImageWithFallback";
 import { Link } from "react-router-dom";
 import Grid from '@mui/material/Grid';
-
+import Typography from '@mui/material/Typography';
 
 interface Props {
   songData: Track;
@@ -27,9 +27,9 @@ const SongResult: FunctionComponent<Props> = function (props) {
         >
           {props.songData.name}
         </Link>
-        <p className="songArtist">
+        <Typography variant="subtitle2" gutterBottom mt={0.5}>
           {props.songData.artists.map((artist) => artist.name).join(", ")}
-        </p>
+        </Typography>
       </div>
     </Grid>
 

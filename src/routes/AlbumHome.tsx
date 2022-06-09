@@ -12,6 +12,7 @@ import { GetArtistAlbumsResponse } from "spotify-web-api-ts/types/types/SpotifyR
 import ArtistAlbums from "../components/AlbumHome/ArtistAlbums";
 import { Link } from "react-router-dom";
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 
 type AlbumHomeParams = {
@@ -99,6 +100,7 @@ function AlbumHome() {
             className="albumCoverHome"
             imagesArray={albumInfo?.images.length}
           />
+          <Typography variant="h3">{albumInfo?.name}</Typography>
           <h1>{albumInfo?.name}</h1>
         </div>
         <div>

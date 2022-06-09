@@ -4,13 +4,13 @@ import CircularProgress from "@mui/material/CircularProgress";
 import throttle from "lodash.throttle";
 import AlbumResult from "../components/Home/AlbumResult";
 import { SearchResponse } from "spotify-web-api-ts/types/types/SpotifyResponses";
-import "../styles/Home.css";
 import SongResult from "../components/Home/SongResult";
 import ArtistResult from "../components/Home/ArtistResult";
 import SearchAppBar from "../components/TopOfPageHome";
 import Alert from "@mui/material/Alert";
 import currentAccessToken from "../lib/accessToken";
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 function Home() {
   const [searchResults, setSearchResults] = useState<SearchResponse>({});
@@ -64,7 +64,7 @@ function Home() {
         </div>
       );
     }
-    return <p>{`There aren't any songs with the name "${searchValue}"`}</p>;
+    return <Typography variant="subtitle1" gutterBottom mt={3} >{`There aren't any songs with the name "${searchValue}"`}</Typography>
   };
 
   const renderAlbums = () => {
@@ -81,7 +81,7 @@ function Home() {
         </div>
       );
     }
-    return <p>{`There aren't any albums with the name "${searchValue}"`}</p>;
+    return <Typography variant="subtitle1" gutterBottom mt={3}>{`There aren't any albums with the name "${searchValue}"`}</Typography>;
   };
 
   const renderArtists = () => {
@@ -98,7 +98,7 @@ function Home() {
         </div>
       );
     }
-    return <p>{`There aren't any artists with the name ${searchValue}`}</p>;
+    return <Typography variant="subtitle1" gutterBottom mt={3}>{`There aren't any artists with the name "${searchValue}"`}</Typography>;
   };
 
   const renderSearchResults = () => {
@@ -122,16 +122,16 @@ function Home() {
 
       return (
         <div>
-          <h2>Songs</h2>
+          <Typography variant="h4" mb={4} mt={4}>Songs</Typography>
           {renderSongs()}
-          <h2>Albums</h2>
+          <Typography variant="h4" mb={4} mt={5}>Albums</Typography>
           {renderAlbums()}
-          <h2>Artists</h2>
+          <Typography variant="h4" mb={4} mt={5}>Artists</Typography>
           {renderArtists()}
         </div>
       );
     }
-    return <h2>Search here the music that you want!</h2>;
+    return <Typography variant="h4" mt={8}>Search here the music that you want!</Typography>
   };
 
   return (
