@@ -119,7 +119,7 @@ function ArtistHome() {
           ))}
         </div>
         <Typography mt={8} mb={5} variant="h4" fontWeight="bold">Albums</Typography>
-        <Box display="flex">
+        <Box display="flex" flexWrap="wrap">
           {artistAlbums?.items.map((album) => (
             <ArtistAlbums
               artistAlbum={album}
@@ -128,8 +128,8 @@ function ArtistHome() {
             />
           ))}
         </Box>
-        <h2>Singles</h2>
-        <div className="singlesList">
+        <Typography mt={8} mb={5} variant="h4" fontWeight="bold">Singles</Typography>
+        <Box display="flex" flexWrap="wrap">
           {artistAlbums?.items.map((single) => (
             <ArtistSingle
               artistSingle={single}
@@ -137,20 +137,18 @@ function ArtistHome() {
               key={single.id}
             />
           ))}
-        </div>
+        </Box>
       </div>
     );
   };
   return (
     <div>
-      <Box>
-        <SearchAppBar />
-        <div>
-          <Container maxWidth="xl">
-            {renderArtistHome()}
-          </Container>
-        </div>
-      </Box>
+      <SearchAppBar />
+      <div>
+        <Container maxWidth="xl">
+          {renderArtistHome()}
+        </Container>
+      </div>
     </div>
   );
 }

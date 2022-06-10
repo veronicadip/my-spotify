@@ -14,7 +14,7 @@ interface Props {
 
 const ArtistResult: FunctionComponent<Props> = function (props) {
   return (
-    <Grid container mr={2} p={1}>
+    <Grid item mr={2} p={1}>
       <ImageWithFallback
         src={props.artistData.images.at(1)?.url}
         fallback={props.fallback}
@@ -23,10 +23,8 @@ const ArtistResult: FunctionComponent<Props> = function (props) {
         imagesArray={props.artistData.images.length}
       />
       <Link to={`/artist/${props.artistData.id}`}>
-      <Typography variant="subtitle1" ml={2.5}>{props.artistData.name}</Typography>
-          
-        </Link>
-       
+        <Typography variant="subtitle1" ml={2.5}>{props.artistData.name}</Typography>
+      </Link>
     </Grid>
   );
 };

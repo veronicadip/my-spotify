@@ -73,7 +73,7 @@ function Home() {
   const renderAlbums = () => {
     if (searchResults.albums?.items.length) {
       return (
-        <Box display="flex">
+        <Box display="flex" flexWrap="wrap">
           {searchResults.albums?.items.map((album) => (
             <AlbumResult
               albumData={album}
@@ -90,7 +90,7 @@ function Home() {
   const renderArtists = () => {
     if (searchResults.artists?.items.length) {
       return (
-        <Box display="flex">
+        <Box display="flex" flexWrap="wrap">
           {searchResults.artists?.items.map((artist) => (
             <ArtistResult
               artistData={artist}

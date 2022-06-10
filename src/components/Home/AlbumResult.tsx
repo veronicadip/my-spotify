@@ -15,8 +15,7 @@ interface Props {
 
 const AlbumResult: FunctionComponent<Props> = function (props) {
   return (
-    <Grid container mr={2} p={3}>
-      <Box>
+    <Grid item mr={2} p={3}>
         <ImageWithFallback
           src={props.albumData.images.at(1)?.url}
           fallback={props.fallback}
@@ -24,7 +23,7 @@ const AlbumResult: FunctionComponent<Props> = function (props) {
           className="albumPicture"
           imagesArray={props.albumData.images.length}
         />
-        <Grid item mt={1}>
+        <Box>
           <Link
             to={`/artist/${props.albumData.artists.at(0)?.id}/album/${props.albumData.id
               }`}
@@ -34,8 +33,7 @@ const AlbumResult: FunctionComponent<Props> = function (props) {
           <Typography variant="subtitle2" mt={0.5}>
             {props.albumData.artists.map((artist) => artist.name).join(", ")}
           </Typography>
-        </Grid>
-      </Box>
+        </Box>
     </Grid>
   );
 };
