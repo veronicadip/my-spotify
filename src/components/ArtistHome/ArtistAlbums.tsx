@@ -15,7 +15,7 @@ const ArtistAlbums: FunctionComponent<Props> = function (props) {
     props.artistAlbum.album_group === "album"
   ) {
     return (
-      <Grid item p={5}>
+      <Grid item p={5} m={3} ml={0} maxWidth={270}>
         <ImageWithFallback
           src={props.artistAlbum.images.at(1)?.url}
           fallback={props.fallback}

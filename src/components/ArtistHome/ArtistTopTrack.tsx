@@ -11,7 +11,7 @@ interface Props {
 
 const ArtistTopTrack: FunctionComponent<Props> = function (props) {
   return (
-    <Grid container mt={4}>
+    <Grid container mt={3}>
       <ImageWithFallback
         src={props.topTrackInfo.album.images.at(2)?.url}
         fallback={props.fallback}

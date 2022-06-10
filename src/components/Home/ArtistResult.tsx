@@ -3,7 +3,6 @@ import { Artist } from "spotify-web-api-ts/types/types/SpotifyObjects";
 import { Link } from "react-router-dom";
 import ImageWithFallback from "../ImageWithFallback";
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 
@@ -14,7 +13,7 @@ interface Props {
 
 const ArtistResult: FunctionComponent<Props> = function (props) {
   return (
-    <Grid item mr={2} p={1}>
+    <Grid item mr={2} p={1} maxWidth={270}>
       <ImageWithFallback
         src={props.artistData.images.at(1)?.url}
         fallback={props.fallback}
