@@ -1,6 +1,8 @@
 import { FunctionComponent } from "react";
 import { Track } from "spotify-web-api-ts/types/types/SpotifyObjects";
 import ImageWithFallback from "../ImageWithFallback";
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 interface Props {
   topTrackInfo: Track;
@@ -9,7 +11,7 @@ interface Props {
 
 const ArtistTopTrack: FunctionComponent<Props> = function (props) {
   return (
-    <div className="trackContainer">
+    <Grid container mt={4}>
       <ImageWithFallback
         src={props.topTrackInfo.album.images.at(2)?.url}
         fallback={props.fallback}
@@ -17,8 +19,8 @@ const ArtistTopTrack: FunctionComponent<Props> = function (props) {
         className="topTrackCover"
         imagesArray={props.topTrackInfo.album.images.length}
       />
-      <span className="trackName">{props.topTrackInfo.name}</span>
-    </div>
+      <Typography ml={2} mt={1} variant="subtitle1">{props.topTrackInfo.name}</Typography>
+    </Grid>
   );
 };
 

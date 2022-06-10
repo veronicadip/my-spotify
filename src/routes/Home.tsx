@@ -56,7 +56,7 @@ function Home() {
   const renderSongs = () => {
     if (searchResults.tracks?.items.length) {
       return (
-        <div className="songsList">
+        <div>
           {searchResults.tracks?.items.map((song) => (
             <SongResult
               songData={song}

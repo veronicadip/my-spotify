@@ -13,6 +13,9 @@ import ArtistAlbums from "../components/ArtistHome/ArtistAlbums";
 import ArtistSingle from "../components/ArtistHome/ArtistSingle";
 import ImageWithFallback from "../components/ImageWithFallback";
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Container from "@mui/material/Container"
+import Typography from '@mui/material/Typography';
 
 
 type ArtistHomeParams = {
@@ -92,7 +95,7 @@ function ArtistHome() {
     }
     return (
       <div>
-        <div className="artistInfoContainer">
+        <Box display="flex" mt={5}>
           <ImageWithFallback
             src={artistInfo?.images.at(1)?.url}
             fallback={artistPictureFallback}
@@ -100,13 +103,13 @@ function ArtistHome() {
             className="artistProfilePicture"
             imagesArray={artistInfo?.images.length}
           />
-          <div className="nameAndFollowers">
-            <h1 className="artistNameHome">{artistInfo?.name}</h1>
-            <span className="followers">{`${artistInfo?.followers.total} followers`}</span>
-          </div>
-        </div>
-        <h2>Popular songs</h2>
-        <div className="topTracksList">
+          <Grid item m={4}>
+            <Typography variant="h2" fontWeight="bold">{artistInfo?.name}</Typography>
+            <Typography m={1} variant="subtitle2">{`${artistInfo?.followers.total} followers`}</Typography>
+          </Grid>
+        </Box>
+        <Typography mt={8} mb={4} variant="h4" fontWeight="bold">Popular songs</Typography>
+        <div>
           {topTracks?.map((track) => (
             <ArtistTopTrack
               topTrackInfo={track}
@@ -115,8 +118,8 @@ function ArtistHome() {
             />
           ))}
         </div>
-        <h2>Albums</h2>
-        <div className="albumsList">
+        <Typography mt={8} mb={5} variant="h4" fontWeight="bold">Albums</Typography>
+        <Box display="flex">
           {artistAlbums?.items.map((album) => (
             <ArtistAlbums
               artistAlbum={album}
@@ -124,7 +127,7 @@ function ArtistHome() {
               key={album.id}
             />
           ))}
-        </div>
+        </Box>
         <h2>Singles</h2>
         <div className="singlesList">
           {artistAlbums?.items.map((single) => (
@@ -139,10 +142,16 @@ function ArtistHome() {
     );
   };
   return (
-    <Box>
-      <SearchAppBar />
-      <div className="bodyOfPage">{renderArtistHome()}</div>
-    </Box>
+    <div>
+      <Box>
+        <SearchAppBar />
+        <div>
+          <Container maxWidth="xl">
+            {renderArtistHome()}
+          </Container>
+        </div>
+      </Box>
+    </div>
   );
 }
 
