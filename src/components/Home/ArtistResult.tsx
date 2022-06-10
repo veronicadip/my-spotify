@@ -22,7 +22,7 @@ const ArtistResult: FunctionComponent<Props> = function (props) {
         imagesArray={props.artistData.images.length}
       />
       <Link to={`/artist/${props.artistData.id}`}>
-        <Typography variant="subtitle1" ml={2.5}>{props.artistData.name}</Typography>
+        <Typography variant="subtitle1" align="center" fontWeight="bold">{props.artistData.name}</Typography>
       </Link>
     </Grid>
   );
