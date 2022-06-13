@@ -7,7 +7,7 @@ import "./styles/index.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import SongHome from "./routes/SongHome";
 import NotFound from "./routes/NotFound";
-import {Layout} from "./routes/FooterLayout";
+import { Layout } from "./routes/FooterLayout";
 
 const darkTheme = createTheme({
   palette: {

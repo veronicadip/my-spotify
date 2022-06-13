@@ -1,16 +1,21 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { FunctionComponent, useState } from "react"
+import { FunctionComponent, useState, ReactNode } from "react"
+import SongHome from "./SongHome";
+
+interface LayoutProps {
+    children?: ReactNode
+}
 
 export const LayoutContext = React.createContext({ setSongPlaying: (url: string) => { } })
 
-export const Layout: FunctionComponent = ({ children }) => {
+
+export const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
     const [songPlaying, setSongPlaying] = useState<string | undefined>();
     const playSongHandler = (song: string) => {
         setSongPlaying(song)
+        console.log(songPlaying)
     }
-    
-
     return (
         <div>
             <Outlet />
