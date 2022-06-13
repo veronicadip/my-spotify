@@ -7,7 +7,7 @@ import "./styles/index.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import SongHome from "./routes/SongHome";
 import NotFound from "./routes/NotFound";
-import FooterLayout from "./routes/FooterLayout";
+import {Layout} from "./routes/FooterLayout";
 
 const darkTheme = createTheme({
   palette: {
@@ -22,7 +22,7 @@ root.render(
   <BrowserRouter>
     <ThemeProvider theme={darkTheme}>
       <Routes>
-        <Route element={<FooterLayout />}>
+        <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/artist/:artistId" element={<ArtistHome />} />
           <Route

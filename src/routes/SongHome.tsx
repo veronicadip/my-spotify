@@ -75,7 +75,16 @@ function SongHome() {
   //   setSongPlaying(songAlbum?.tracks.items.find((song) => song.id === songId)?.preview_url)
   // }
 
-
+  const onPlaySong = () => {
+    return (
+      <LayoutContext.Consumer>
+        {(playSongHandler) => {
+          setSongPlaying(songAlbum?.tracks.items.find((song) => song.id === songId)?.preview_url)
+          return songPlaying
+        }}
+      </LayoutContext.Consumer>
+    )
+  }
 
   const renderSongHome = () => {
     if (isLoadingSong || isLoadingArtist || isLoadingAlbum) {
@@ -99,7 +108,7 @@ function SongHome() {
           imagesArray={songInfo?.album.images.length}
         />
         <h1>{songInfo?.name}</h1>
-        <Button variant="contained" color="secondary" onClick={playSongHandler}>Play</Button>
+        <Button variant="contained" color="secondary" onClick={onPlaySong}>Play</Button>
         <div>
           <ImageWithFallback src={songArtist?.images.at(2)?.url} fallback={artistPictureFallback} alt={`${songArtist?.name} profile picture`} imagesArray={songArtist?.images.length} />
           <Link to={`/artist/${artistId}`}>
@@ -115,14 +124,15 @@ function SongHome() {
     <div>
       <SearchAppBar />
       {renderSongHome()}
-      <LayoutContext.Consumer>
-        {(playSongHandler) => {
-          return <h1>test</h1>
-          // setSongUrl is a function that will set the song URL in the Layout component
-        }}
-      </LayoutContext.Consumer>
+
     </div>
   );
 }
+
+{/* <LayoutContext.Consumer>
+  (setSongUrl) => {
+    // setSongUrl is a function that will set the song URL in the Layout component
+  }
+</LayoutContext.Consumer> */}
 
 export default SongHome;
