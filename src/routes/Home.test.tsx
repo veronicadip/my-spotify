@@ -122,7 +122,7 @@ describe("<Home>", function () {
     });
 
     await waitFor(() => {
-      screen.getByText(/Harry Styles/i)
+      screen.getAllByAltText(/Harry Styles/i)
     });
 
     await waitFor(() => {

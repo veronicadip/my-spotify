@@ -4,12 +4,16 @@ import CircularProgress from "@mui/material/CircularProgress";
 import throttle from "lodash.throttle";
 import AlbumResult from "../components/Home/AlbumResult";
 import { SearchResponse } from "spotify-web-api-ts/types/types/SpotifyResponses";
-import "../styles/Home.css";
 import SongResult from "../components/Home/SongResult";
 import ArtistResult from "../components/Home/ArtistResult";
 import SearchAppBar from "../components/TopOfPageHome";
 import Alert from "@mui/material/Alert";
 import currentAccessToken from "../lib/accessToken";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Container from "@mui/material/Container"
+import Typography from '@mui/material/Typography';
+import "../styles/Home.css"
 
 function Home() {
   const [searchResults, setSearchResults] = useState<SearchResponse>({});
@@ -51,7 +55,7 @@ function Home() {
   const renderSongs = () => {
     if (searchResults.tracks?.items.length) {
       return (
-        <div className="songsList">
+        <div>
           {searchResults.tracks?.items.map((song) => (
             <SongResult
               songData={song}
@@ -62,13 +66,13 @@ function Home() {
         </div>
       );
     }
-    return <p>{`There aren't any songs with the name "${searchValue}"`}</p>;
+    return <Typography variant="subtitle1" gutterBottom mt={3} >{`There aren't any songs with the name "${searchValue}"`}</Typography>
   };
 
   const renderAlbums = () => {
     if (searchResults.albums?.items.length) {
       return (
-        <div className="albumsList">
+        <Box display="flex" flexWrap="wrap">
           {searchResults.albums?.items.map((album) => (
             <AlbumResult
               albumData={album}
@@ -76,16 +80,16 @@ function Home() {
               key={album.id}
             />
           ))}
-        </div>
+        </Box>
       );
     }
-    return <p>{`There aren't any albums with the name "${searchValue}"`}</p>;
+    return <Typography variant="subtitle1" gutterBottom mt={3}>{`There aren't any albums with the name "${searchValue}"`}</Typography>;
   };
 
   const renderArtists = () => {
     if (searchResults.artists?.items.length) {
       return (
-        <div className="artistsList">
+        <Box display="flex" flexWrap="wrap">
           {searchResults.artists?.items.map((artist) => (
             <ArtistResult
               artistData={artist}
@@ -93,10 +97,10 @@ function Home() {
               key={artist.id}
             />
           ))}
-        </div>
+        </Box>
       );
     }
-    return <p>{`There aren't any artists with the name "${searchValue}"`}</p>;
+    return <Typography variant="subtitle1" gutterBottom mt={3}>{`There aren't any artists with the name "${searchValue}"`}</Typography>;
   };
 
   const renderSearchResults = () => {
@@ -111,7 +115,7 @@ function Home() {
       if (searchError) {
         return (
           <div>
-            <Alert severity="error" className="errorMessage">
+            <Alert severity="error">
               There was an error loading the data, please try again.
             </Alert>
           </div>
@@ -120,23 +124,34 @@ function Home() {
 
       return (
         <div>
-          <h2>Songs</h2>
-          {renderSongs()}
-          <h2>Albums</h2>
-          {renderAlbums()}
-          <h2>Artists</h2>
-          {renderArtists()}
+          <Typography variant="h4" mb={2} mt={4}>Songs</Typography>
+          <Grid container>
+            {renderSongs()}
+          </Grid>
+          <Typography variant="h4" mb={4} mt={10}>Albums</Typography>
+          <Grid container>
+            {renderAlbums()}
+          </Grid>
+          <Typography variant="h4" mb={3} mt={10}>Artists</Typography>
+          <Grid container>
+            {renderArtists()}
+          </Grid>
         </div>
       );
     }
-    return <h2>Search here the music that you want!</h2>;
+    return <Typography variant="h4" align="center" mt={20}>Search here the music that you want!</Typography>
   };
 
   return (
     <div>
       <SearchAppBar searchHandler={searchHandler} />
-      <div className="bodyOfPage">{renderSearchResults()}</div>
+      <div>
+        <Container maxWidth="xl">
+          {renderSearchResults()}
+        </Container>
+      </div>
     </div>
+
   );
 }
 
