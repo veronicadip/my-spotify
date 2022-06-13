@@ -1,10 +1,14 @@
 import { BrowserRouter } from "react-router-dom";
 import { render } from "@testing-library/react";
+import { Album } from "spotify-web-api-ts/types/types/SpotifyObjects";
 
-export const renderWithRouter = async (component: JSX.Element, { route = "/" } = {}) => {
+export const renderWithRouter = async (
+    component: JSX.Element,
+    { route = "/" } = {}
+) => {
     window.history.pushState({}, "Test page", route);
-    return render(component, { wrapper: BrowserRouter })
-}
+    return render(component, { wrapper: BrowserRouter });
+};
 
 export const artist = {
     followers: {
@@ -88,5 +92,10 @@ const single = {
     name: "Matilda"
 }
 
+export const albums = [album, single]
 export const tracks = [track];
-export const albums = [album, single]  
+export const artists = [artist];
+
+
+
+
