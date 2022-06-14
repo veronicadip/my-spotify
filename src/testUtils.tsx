@@ -72,6 +72,16 @@ export const track = {
     track_number: 1
 };
 
+export const track2 = {
+    album: album,
+    artists: [artist],
+    duration_ms: 209577,
+    id: "track2id",
+    name: "Satellite",
+    preview_url: null,
+    track_number: 1
+};
+
 const single = {
     album_group: "single",
     album_type: "single",
@@ -93,7 +103,7 @@ const single = {
 }
 
 export const albums = [album, single]
-export const tracks = [track];
+export const tracks = [track, track2];
 export const artists = [artist];
 
 

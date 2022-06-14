@@ -1,10 +1,7 @@
-import SongHome from "./SongHome";
 import WrappedSongHome from "./WrappedSongHome"
-import { renderWithRouter, track, artist, album } from "../testUtils";
+import { renderWithRouter, track, artist, album, track2 } from "../testUtils";
 import { act } from "react-dom/test-utils";
 import { screen } from "@testing-library/dom";
-import userEvent from "@testing-library/user-event";
-import { waitFor } from "@testing-library/react";
 
 const mockGetAlbum = jest.fn();
 const mockGetTrack = jest.fn();
@@ -79,38 +76,27 @@ describe("<SongHome>", function () {
         screen.getByText(/More of: Harry's House/i)
     })
 
-    // it("plays the song when you click the play button", async () => {
-    //     mockGetTrack.mockResolvedValue(track)
-    //     mockGetArtist.mockResolvedValue(artist)
-    //     mockGetAlbum.mockResolvedValue(album)
+    it("renders a play button when the user can play the song", async () => {
+        mockGetTrack.mockResolvedValue(track)
+        mockGetArtist.mockResolvedValue(artist)
+        mockGetAlbum.mockResolvedValue(album)
 
-    //     await act(async () => {
-    //         await renderWithRouter(<WrappedSongHome />, { route: "/artist/:artistId/album/:albumId/song/:songId" })
-    //     })
+        await act(async () => {
+            await renderWithRouter(<WrappedSongHome />, { route: "/artist/:artistId/album/:albumId/song/:songId" })
+        })
 
-    //     await act(async () => {
-    //         userEvent.click(screen.getByRole("button"))
-    //     })
+        screen.getByText(/Play/i)
+    })
 
-    //     await waitFor(() => {
-    //         screen.getByText(/0:29/i)
-    //     })
+    it("renders a message when the user can‘t play the song", async () => {
+        mockGetTrack.mockResolvedValue(track2)
+        mockGetArtist.mockResolvedValue(artist)
+        mockGetAlbum.mockResolvedValue(album)
 
-    // })
+        await act(async () => {
+            await renderWithRouter(<WrappedSongHome />, { route: "/artist/:artistId/album/:albumId/song/:songId" })
+        })
+
+        screen.getByText(/This song isn‘t available/i)
+    })
 })
-
-// it("renders loading component when the data is loading", async () => {
-//     mockSearch.mockReturnValue(new Promise(() => { }));
-
-//     await act(async () => {
-//       await renderWithRouter(<Home />);
-//     });
-
-//     await act(async () => {
-//       userEvent.type(screen.getByRole("textbox"), "x");
-//     });
-
-//     await waitFor(() => {
-//       screen.getByRole("progressbar");
-//     });
-//   });

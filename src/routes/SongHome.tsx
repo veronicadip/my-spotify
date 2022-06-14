@@ -37,7 +37,7 @@ const SongHome: FunctionComponent<SongHomeProps> = ({ playSongHandler }) => {
   const [songAlbum, setSongAlbum] = useState<Album>();
   const [isLoadingAlbum, setIsLoadingAlbum] = useState(true);
   const [albumError, setAlbumError] = useState(false);
-  const songUrl = songAlbum?.tracks.items.find((song) => song.id === songId)?.preview_url
+  const songUrl = songAlbum?.tracks.items.find((song) => song.id === songInfo?.id)?.preview_url
 
   const albumCoverFallback =
     "https://tidal.com/browse/assets/images/defaultImages/defaultPlaylistImage.png";
@@ -49,6 +49,7 @@ const SongHome: FunctionComponent<SongHomeProps> = ({ playSongHandler }) => {
   spotifyApi.setAccessToken(accessToken);
 
   useEffect(() => {
+    console.log(songId)
     spotifyApi.tracks
       .getTrack(songId)
       .then((response) => {

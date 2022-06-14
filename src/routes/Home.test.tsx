@@ -161,6 +161,28 @@ describe("<Home>", function () {
 
     screen.getByText(/Search here the music that you want!/i)
   })
-});
 
+  it("renders a play button in each song that is playable", async () => {
+    mockSearch.mockResolvedValue({
+      albums: { items: albums },
+      artists: { items: artists },
+      tracks: { items: tracks }
+    });
+    mockGetAlbum.mockResolvedValue(album)
+
+    await act(async () => {
+      await renderWithRouter(<Home />)
+    })
+    await act(async () => {
+      userEvent.type(screen.getByRole("textbox"), "Harry");
+    });
+
+    await waitFor(() => {
+      screen.getByText(/Play/i)
+    })
+    await waitFor(() => {
+      screen.getByText(/This song isn‘t available/i)
+    })
+  })
+});
 
