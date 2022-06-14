@@ -1,21 +1,23 @@
 import Home from "../routes/Home";
-import { renderWithRouter, artists, albums, tracks } from "../testUtils";
+import { renderWithRouter, artists, albums, tracks, album } from "../testUtils";
 import { act } from "react-dom/test-utils";
 import { screen } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { waitFor } from "@testing-library/react";
 
 const mockSearch = jest.fn();
+const mockGetAlbum = jest.fn();
 
 jest.mock("spotify-web-api-ts", () => ({
   SpotifyWebApi: function () {
-    return { search: { search: mockSearch }, setAccessToken: jest.fn() };
+    return { search: { search: mockSearch }, setAccessToken: jest.fn(), albums: { getAlbum: mockGetAlbum } };
   },
 }));
 
 describe("<Home>", function () {
   beforeEach(() => {
     mockSearch.mockClear();
+    mockGetAlbum.mockClear();
   });
 
   it("renders without crashing", async () => {
@@ -30,6 +32,7 @@ describe("<Home>", function () {
       artists: { items: [] },
       tracks: { items: [] },
     });
+    mockGetAlbum.mockResolvedValue(album)
 
     await act(async () => {
       await renderWithRouter(<Home />);
@@ -50,6 +53,7 @@ describe("<Home>", function () {
       artists: { items: [] },
       tracks: { items: [] },
     });
+    mockGetAlbum.mockResolvedValue(album)
 
     await act(async () => {
       await renderWithRouter(<Home />);
@@ -70,6 +74,7 @@ describe("<Home>", function () {
       artists: { items: [] },
       tracks: { items: [] },
     });
+    mockGetAlbum.mockResolvedValue(album)
 
     await act(async () => {
       await renderWithRouter(<Home />);
@@ -86,6 +91,7 @@ describe("<Home>", function () {
 
   it("renders an error message on errors", async () => {
     mockSearch.mockRejectedValue({});
+    mockGetAlbum.mockRejectedValue({})
 
     await act(async () => {
       await renderWithRouter(<Home />);
@@ -108,6 +114,7 @@ describe("<Home>", function () {
       artists: { items: artists },
       tracks: { items: tracks }
     });
+    mockGetAlbum.mockResolvedValue(album)
 
     await act(async () => {
       await renderWithRouter(<Home />);
@@ -132,6 +139,7 @@ describe("<Home>", function () {
 
   it("renders loading component when the data is loading", async () => {
     mockSearch.mockReturnValue(new Promise(() => { }));
+    mockGetAlbum.mockReturnValue(new Promise(() => { }))
 
     await act(async () => {
       await renderWithRouter(<Home />);
