@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, FunctionComponent } from "react";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import CircularProgress from "@mui/material/CircularProgress";
 import throttle from "lodash.throttle";
 import AlbumResult from "../components/Home/AlbumResult";
 import { SearchResponse } from "spotify-web-api-ts/types/types/SpotifyResponses";
 import "../styles/Home.css";
-import SongResult from "../components/Home/SongResult";
+import WrappedSongHome from "../components/Home/WrappedSongResult"
 import ArtistResult from "../components/Home/ArtistResult";
 import SearchAppBar from "../components/TopOfPageHome";
 import Alert from "@mui/material/Alert";
@@ -16,6 +16,7 @@ function Home() {
   const [isLoadingSearch, setIsLoadingSearch] = useState(true);
   const [searchError, setSearchError] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+
   const albumCoverFallback =
     "https://tidal.com/browse/assets/images/defaultImages/defaultPlaylistImage.png";
   const artistPictureFallback =
@@ -34,7 +35,6 @@ function Home() {
         .search(query, ["artist", "album", "track"], { limit: 5 })
         .then((response) => {
           setSearchResults(response);
-          console.log(response)
           setIsLoadingSearch(false);
         })
         .catch(() => {
@@ -54,7 +54,7 @@ function Home() {
       return (
         <div className="songsList">
           {searchResults.tracks?.items.map((song) => (
-            <SongResult
+            <WrappedSongHome
               songData={song}
               fallback={albumCoverFallback}
               key={song.id}
@@ -142,6 +142,3 @@ function Home() {
 }
 
 export default Home;
-
-// client ID: e26e4e3168be4fc3b9a9c766601fa05a
-// client secret: a478ac602633484da0b64a6b9c2679bb

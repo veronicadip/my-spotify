@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FunctionComponent } from "react";
 import { useParams } from "react-router-dom";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import currentAccessToken from "../lib/accessToken";
@@ -9,15 +9,20 @@ import Alert from "@mui/material/Alert";
 import ImageWithFallback from "../components/ImageWithFallback";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { LayoutContext } from "./FooterLayout";
+import Typography from '@mui/material/Typography';
 
 type SongHomeParams = {
   artistId: string;
   albumId: string;
   songId: string;
+
 };
 
-function SongHome() {
+type SongHomeProps = {
+  playSongHandler: (url: string | undefined) => void
+}
+
+const SongHome: FunctionComponent<SongHomeProps> = ({ playSongHandler }) => {
   const { artistId, albumId, songId } = useParams() as SongHomeParams;
   const [songInfo, setSongInfo] = useState<Track>();
   const [isLoadingSong, setIsLoadingSong] = useState(true);
@@ -28,7 +33,8 @@ function SongHome() {
   const [songAlbum, setSongAlbum] = useState<Album>();
   const [isLoadingAlbum, setIsLoadingAlbum] = useState(true);
   const [albumError, setAlbumError] = useState(false);
-  const [songPlaying, setSongPlaying] = useState<string | undefined>();
+  const songUrl = songAlbum?.tracks.items.find((song) => song.id === songId)?.preview_url
+
   const albumCoverFallback =
     "https://tidal.com/browse/assets/images/defaultImages/defaultPlaylistImage.png";
   const artistPictureFallback =
@@ -61,7 +67,6 @@ function SongHome() {
     spotifyApi.albums.getAlbum(albumId)
       .then((response) => {
         setSongAlbum(response);
-        console.log(response);
         setIsLoadingAlbum(false);
       })
       .catch(() => {
@@ -70,20 +75,16 @@ function SongHome() {
       })
   }, []);
 
+  const onSongPlaying = (event: React.MouseEvent) => {
+    event.preventDefault()
+    playSongHandler(songUrl)
+  }
 
-  // const playSongHandler = () => {
-  //   setSongPlaying(songAlbum?.tracks.items.find((song) => song.id === songId)?.preview_url)
-  // }
-
-  const onPlaySong = () => {
-    return (
-      <LayoutContext.Consumer>
-        {(playSongHandler) => {
-          setSongPlaying(songAlbum?.tracks.items.find((song) => song.id === songId)?.preview_url)
-          return songPlaying
-        }}
-      </LayoutContext.Consumer>
-    )
+  const renderButton = () => {
+    if (songUrl) {
+      return <Button variant="contained" color="secondary" onClick={onSongPlaying}>Play</Button>
+    }
+    return <Typography variant="subtitle1">This song isn‘t available</Typography>
   }
 
   const renderSongHome = () => {
@@ -108,7 +109,7 @@ function SongHome() {
           imagesArray={songInfo?.album.images.length}
         />
         <h1>{songInfo?.name}</h1>
-        <Button variant="contained" color="secondary" onClick={onPlaySong}>Play</Button>
+        {renderButton()}
         <div>
           <ImageWithFallback src={songArtist?.images.at(2)?.url} fallback={artistPictureFallback} alt={`${songArtist?.name} profile picture`} imagesArray={songArtist?.images.length} />
           <Link to={`/artist/${artistId}`}>
@@ -120,19 +121,14 @@ function SongHome() {
     );
   };
 
+
+
   return (
     <div>
       <SearchAppBar />
       {renderSongHome()}
-
     </div>
   );
 }
-
-{/* <LayoutContext.Consumer>
-  (setSongUrl) => {
-    // setSongUrl is a function that will set the song URL in the Layout component
-  }
-</LayoutContext.Consumer> */}
 
 export default SongHome;

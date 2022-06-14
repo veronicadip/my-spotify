@@ -42,7 +42,6 @@ function AlbumHome() {
       .getAlbum(albumId)
       .then((response) => {
         setAlbumInfo(response);
-        console.log(response);
         setIsLoadingAlbum(false);
       })
       .catch(() => {

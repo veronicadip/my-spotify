@@ -5,7 +5,7 @@ import ArtistHome from "./routes/ArtistHome";
 import AlbumHome from "./routes/AlbumHome";
 import "./styles/index.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import SongHome from "./routes/SongHome";
+import WrappedSongHome from "./routes/WrappedSongHome";
 import NotFound from "./routes/NotFound";
 import { Layout } from "./routes/FooterLayout";
 
@@ -27,7 +27,7 @@ root.render(
           <Route path="/artist/:artistId" element={<ArtistHome />} />
           <Route
             path="/artist/:artistId/album/:albumId/song/:songId"
-            element={<SongHome />}
+            element={<WrappedSongHome />}
           />
           <Route
             path="/artist/:artistId/album/:albumId"
