@@ -11,6 +11,12 @@ import AlbumSongs from "../components/AlbumHome/AlbumSongs";
 import { GetArtistAlbumsResponse } from "spotify-web-api-ts/types/types/SpotifyResponses.js";
 import ArtistAlbums from "../components/AlbumHome/ArtistAlbums";
 import { Link } from "react-router-dom";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Container from "@mui/material/Container"
+import "../styles/AlbumHome.css"
+
 
 type AlbumHomeParams = {
   artistId: string;
@@ -89,7 +95,7 @@ function AlbumHome() {
     }
     return (
       <div>
-        <div>
+        <Box display="flex" m={8} ml={0}>
           <ImageWithFallback
             src={albumInfo?.images.at(1)?.url}
             fallback={albumCoverFallback}
@@ -97,24 +103,27 @@ function AlbumHome() {
             className="albumCoverHome"
             imagesArray={albumInfo?.images.length}
           />
-          <h1>{albumInfo?.name}</h1>
-        </div>
+          <Typography variant="h3" ml={10} mt={4} fontWeight="bold">{albumInfo?.name}</Typography>
+        </Box>
         <div>
           {albumInfo?.tracks.items.map((song) => (
             <AlbumSongs songAlbum={song} key={song.id} />
           ))}
         </div>
-        <div>
+        <Grid container m={8} ml={0}>
           <ImageWithFallback
             src={artistInfo?.images.at(2)?.url}
             fallback={artistPictureFallback}
             alt={`${artistInfo?.name} profile picture`}
             imagesArray={artistInfo?.images.length}
+            className="artistProfilePicture"
           />
-          <Link to={`/artist/${artistId}`}>{artistInfo?.name}</Link>
-        </div>
-        <h2>{`More albums by ${albumInfo?.artists.at(0)?.name}`}</h2>
-        <div>
+          <Typography variant="h5" fontWeight="bold" mt={4} ml={3}>
+            <Link to={`/artist/${artistId}`}>{artistInfo?.name}</Link>
+          </Typography>
+        </Grid>
+        <Typography variant="h4" mb={5} fontWeight="bold">{`More albums by ${albumInfo?.artists.at(0)?.name}`}</Typography>
+        <Box display="flex" flexWrap="wrap">
           {artistAlbums?.items.map((album) => (
             <ArtistAlbums
               artistAlbum={album}
@@ -122,7 +131,7 @@ function AlbumHome() {
               albumCoverFallback={albumCoverFallback}
             />
           ))}
-        </div>
+        </Box>
       </div>
     );
   };
@@ -130,8 +139,13 @@ function AlbumHome() {
   return (
     <div>
       <SearchAppBar />
-      {renderAlbumHome()}
+      <div>
+        <Container maxWidth="xl">
+          {renderAlbumHome()}
+        </Container>
+      </div>
     </div>
+
   );
 }
 

@@ -8,6 +8,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import WrappedSongHome from "./routes/WrappedSongHome";
 import NotFound from "./routes/NotFound";
 import { Layout } from "./routes/FooterLayout";
+import { CssBaseline } from "@mui/material"
 
 const darkTheme = createTheme({
   palette: {
@@ -21,6 +22,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
