@@ -2,7 +2,6 @@ import { FunctionComponent } from "react";
 import { SimplifiedTrack } from "spotify-web-api-ts/types/types/SpotifyObjects.js";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 
 interface Props {
   songAlbum: SimplifiedTrack;
