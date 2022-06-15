@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { FunctionComponent, useState, ReactNode } from "react"
+import { FunctionComponent, useState, ReactNode } from "react";
+import Box from '@mui/material/Box';
 
 interface LayoutProps {
     children?: ReactNode
@@ -19,7 +20,9 @@ export const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
             <LayoutContext.Provider value={{ playSongHandler }}>
                 <Outlet />
             </LayoutContext.Provider>
-            <audio controls autoPlay src={songPlaying}></audio>
+            <Box display="flex" justifyContent="center" mt={10}>
+                <audio controls autoPlay src={songPlaying}></audio>
+            </Box>
         </div>
 
     )

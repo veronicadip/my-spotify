@@ -86,7 +86,7 @@ const SongHome: FunctionComponent<SongHomeProps> = ({ playSongHandler }) => {
 
   const renderButton = () => {
     if (songUrl) {
-      return <Button variant="contained" color="secondary" onClick={onSongPlaying}>Play</Button>
+      return <Button variant="contained" color="secondary" onClick={onSongPlaying} size="large">Play</Button>
     }
     return <Typography variant="subtitle1">This song isn‘t available</Typography>
   }
@@ -117,9 +117,14 @@ const SongHome: FunctionComponent<SongHomeProps> = ({ playSongHandler }) => {
             alt={`${songInfo?.album.name} album cover`}
             imagesArray={songInfo?.album.images.length}
           />
+          <Box>
           <Typography variant="h3" ml={10} mt={4} fontWeight="bold">{songInfo?.name}</Typography>
+          <Box ml={10} mt={10}>
+          {renderButton()}
+          </Box>
+          </Box>
         </Box>
-        {renderButton()}
+        
         <Typography variant="subtitle1" mt={3}>
           <Link to={`/artist/${artistId}/album/${albumId}`}>More of: {songInfo?.album.name}</Link>
         </Typography>
