@@ -49,7 +49,6 @@ const SongHome: FunctionComponent<SongHomeProps> = ({ playSongHandler }) => {
   spotifyApi.setAccessToken(accessToken);
 
   useEffect(() => {
-    console.log(songId)
     spotifyApi.tracks
       .getTrack(songId)
       .then((response) => {
