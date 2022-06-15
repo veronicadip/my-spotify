@@ -181,7 +181,7 @@ describe("<Home>", function () {
       screen.getByText(/Play/i)
     })
     await waitFor(() => {
-      screen.getByText(/This song isn‘t available/i)
+      screen.getByText(/Not available/i)
     })
   })
 });
