@@ -2,7 +2,7 @@
 
 You can use this app to search and play any song you want, also search for albums and artists.
 
-![alt text](file:///Users/vero/Desktop/Screen%20Shot%202022-06-15%20at%2016.42.08.png)
+![App home page](https://user-images.githubusercontent.com/98916486/173954990-b60b366a-2562-48fd-89e2-dbcc23892a78.png)
 
 ## Run the app
 
