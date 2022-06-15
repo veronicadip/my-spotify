@@ -1,26 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FunctionComponent } from "react";
 import { useParams } from "react-router-dom";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import currentAccessToken from "../lib/accessToken";
-import { Artist, Track } from "spotify-web-api-ts/types/types/SpotifyObjects";
+import { Artist, Track, Album } from "spotify-web-api-ts/types/types/SpotifyObjects";
 import SearchAppBar from "../components/TopOfPage";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import ImageWithFallback from "../components/ImageWithFallback";
 import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Container from "@mui/material/Container"
-import Typography from '@mui/material/Typography';
 import "../styles/SongHome.css"
 
 type SongHomeParams = {
   artistId: string;
   albumId: string;
   songId: string;
+
 };
 
-function SongHome() {
+type SongHomeProps = {
+  playSongHandler: (url: string | undefined) => void
+}
+
+const SongHome: FunctionComponent<SongHomeProps> = ({ playSongHandler }) => {
   const { artistId, albumId, songId } = useParams() as SongHomeParams;
   const [songInfo, setSongInfo] = useState<Track>();
   const [isLoadingSong, setIsLoadingSong] = useState(true);
@@ -28,6 +34,11 @@ function SongHome() {
   const [songArtist, setSongArtist] = useState<Artist>();
   const [isLoadingArtist, setIsLoadingArtist] = useState(true);
   const [artistError, setArtistError] = useState(false);
+  const [songAlbum, setSongAlbum] = useState<Album>();
+  const [isLoadingAlbum, setIsLoadingAlbum] = useState(true);
+  const [albumError, setAlbumError] = useState(false);
+  const songUrl = songAlbum?.tracks.items.find((song) => song.id === songInfo?.id)?.preview_url
+
   const albumCoverFallback =
     "https://tidal.com/browse/assets/images/defaultImages/defaultPlaylistImage.png";
   const artistPictureFallback =
@@ -57,18 +68,38 @@ function SongHome() {
         setArtistError(true);
         setIsLoadingArtist(false);
       })
+    spotifyApi.albums.getAlbum(albumId)
+      .then((response) => {
+        setSongAlbum(response);
+        setIsLoadingAlbum(false);
+      })
+      .catch(() => {
+        setAlbumError(true);
+        setIsLoadingAlbum(false);
+      })
   }, []);
 
+  const onSongPlaying = (event: React.MouseEvent) => {
+    event.preventDefault()
+    playSongHandler(songUrl)
+  }
+
+  const renderButton = () => {
+    if (songUrl) {
+      return <Button variant="contained" color="secondary" onClick={onSongPlaying}>Play</Button>
+    }
+    return <Typography variant="subtitle1">This song isn‘t available</Typography>
+  }
+
   const renderSongHome = () => {
-    if (isLoadingSong || isLoadingArtist) {
+    if (isLoadingSong || isLoadingArtist || isLoadingAlbum) {
       return (
         <div className="loadingContainer">
           <CircularProgress color="inherit" className="circularProgress" />
         </div>
       )
-
     }
-    if (songError || artistError) {
+    if (songError || artistError || albumError) {
       return (
         <div>
           <Alert severity="error" className="errorMessage">
@@ -88,6 +119,7 @@ function SongHome() {
           />
           <Typography variant="h3" ml={10} mt={4} fontWeight="bold">{songInfo?.name}</Typography>
         </Box>
+        {renderButton()}
         <Typography variant="subtitle1" mt={3}>
           <Link to={`/artist/${artistId}/album/${albumId}`}>More of: {songInfo?.album.name}</Link>
         </Typography>

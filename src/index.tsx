@@ -5,8 +5,9 @@ import ArtistHome from "./routes/ArtistHome";
 import AlbumHome from "./routes/AlbumHome";
 import "./styles/index.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import SongHome from "./routes/SongHome";
+import WrappedSongHome from "./routes/WrappedSongHome";
 import NotFound from "./routes/NotFound";
+import { Layout } from "./routes/FooterLayout";
 import { CssBaseline } from "@mui/material"
 
 const darkTheme = createTheme({
@@ -23,17 +24,19 @@ root.render(
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/artist/:artistId" element={<ArtistHome />} />
-        <Route
-          path="/artist/:artistId/album/:albumId/song/:songId"
-          element={<SongHome />}
-        />
-        <Route
-          path="/artist/:artistId/album/:albumId"
-          element={<AlbumHome />}
-        />
-        <Route path="*" element={<NotFound />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/artist/:artistId" element={<ArtistHome />} />
+          <Route
+            path="/artist/:artistId/album/:albumId/song/:songId"
+            element={<WrappedSongHome />}
+          />
+          <Route
+            path="/artist/:artistId/album/:albumId"
+            element={<AlbumHome />}
+          />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
     </ThemeProvider>
   </BrowserRouter>
