@@ -153,3 +153,4 @@ function ArtistHome() {
 }
 
 export default ArtistHome;
+
