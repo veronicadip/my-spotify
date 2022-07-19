@@ -3,6 +3,7 @@ import { SimplifiedAlbum } from "spotify-web-api-ts/types/types/SpotifyObjects.j
 import ImageWithFallback from "../ImageWithFallback";
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import { Link } from "react-router-dom";
 
 interface Props {
   artistAlbum: SimplifiedAlbum;
@@ -23,7 +24,9 @@ const ArtistAlbums: FunctionComponent<Props> = function (props) {
           imagesArray={props.artistAlbum.images.length}
           className="albumCover"
         />
-        <Typography variant="subtitle1" mt={1} fontWeight="bold">{props.artistAlbum.name}</Typography>
+          <Typography variant="subtitle1" mt={1} fontWeight="bold" >
+          <Link reloadDocument to={`/artist/${props.artistAlbum.artists.at(0)?.id}/album/${props.artistAlbum.id}`}>{props.artistAlbum.name}</Link>
+          </Typography>
       </Grid>
     );
   }

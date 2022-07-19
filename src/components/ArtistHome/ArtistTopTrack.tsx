@@ -3,6 +3,7 @@ import { Track } from "spotify-web-api-ts/types/types/SpotifyObjects";
 import ImageWithFallback from "../ImageWithFallback";
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { Link } from "react-router-dom";
 
 interface Props {
   topTrackInfo: Track;
@@ -19,7 +20,11 @@ const ArtistTopTrack: FunctionComponent<Props> = function (props) {
         className="topTrackCover"
         imagesArray={props.topTrackInfo.album.images.length}
       />
-      <Typography ml={2} mt={1} variant="subtitle1">{props.topTrackInfo.name}</Typography>
+      <Typography ml={2} mt={1} variant="subtitle1">
+        <Link to={`/artist/${props.topTrackInfo.artists.at(0)?.id}/album/${props.topTrackInfo.album.id}/song/${props.topTrackInfo.id}`}>
+          {props.topTrackInfo.name}
+        </Link>
+      </Typography>
     </Grid>
   );
 };
