@@ -29,10 +29,10 @@ function AlbumHome() {
   const [isLoadingAlbum, setIsLoadingAlbum] = useState(true);
   const [albumError, setAlbumError] = useState(false);
   const [artistAlbums, setArtistAlbums] = useState<GetArtistAlbumsResponse>();
-  const [loadingArtistAlbums, setLoadingArtistAlbums] = useState(true);
+  const [isLoadingArtistAlbums, setIsLoadingArtistAlbums] = useState(true);
   const [artistAlbumsError, setArtistAlbumsError] = useState(false);
   const [artistInfo, setArtistInfo] = useState<Artist>();
-  const [loadingArtist, setLoadingArtist] = useState(true);
+  const [isLoadingArtist, setIsLoadingArtist] = useState(true);
   const [artistError, setArtistError] = useState(false);
   const albumCoverFallback =
     "https://tidal.com/browse/assets/images/defaultImages/defaultPlaylistImage.png";
@@ -58,26 +58,26 @@ function AlbumHome() {
       .getArtistAlbums(artistId, { country: "AR" })
       .then((response) => {
         setArtistAlbums(response);
-        setLoadingArtistAlbums(false);
+        setIsLoadingArtistAlbums(false);
       })
       .catch(() => {
         setArtistAlbumsError(true);
-        setLoadingArtistAlbums(false);
+        setIsLoadingArtistAlbums(false);
       });
     spotifyApi.artists
       .getArtist(artistId)
       .then((response) => {
         setArtistInfo(response);
-        setLoadingArtist(false);
+        setIsLoadingArtist(false);
       })
       .catch(() => {
         setArtistError(true);
-        setLoadingArtist(false);
+        setIsLoadingArtist(false);
       });
   }, []);
 
   const renderAlbumHome = () => {
-    if (isLoadingAlbum || loadingArtist || loadingArtistAlbums) {
+    if (isLoadingAlbum || isLoadingArtist || isLoadingArtistAlbums) {
       return (
         <div className="loadingContainer">
           <CircularProgress color="inherit" className="circularProgress" />

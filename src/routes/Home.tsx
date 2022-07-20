@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent } from "react";
+import React, { useState } from "react";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import CircularProgress from "@mui/material/CircularProgress";
 import throttle from "lodash.throttle";
