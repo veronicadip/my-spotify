@@ -15,14 +15,27 @@ export const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
         setSongPlaying(song)
     }
 
+    const renderAudioPlayer = () => {
+        if (songPlaying === undefined) {
+            return (
+                <>
+                </>
+            )
+        }
+        else {
+            return (
+                <Box display="flex" justifyContent="center" mt={10}>
+                    <audio controls autoPlay src={songPlaying}></audio>
+                </Box>
+            )
+        }
+    }
     return (
         <div>
             <LayoutContext.Provider value={{ playSongHandler }}>
                 <Outlet />
             </LayoutContext.Provider>
-            <Box display="flex" justifyContent="center" mt={10}>
-                <audio controls autoPlay src={songPlaying}></audio>
-            </Box>
+            {renderAudioPlayer()}
         </div>
 
     )
