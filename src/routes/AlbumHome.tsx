@@ -116,7 +116,7 @@ function AlbumHome() {
             fallback={artistPictureFallback}
             alt={`${artistInfo?.name} profile picture`}
             imagesArray={artistInfo?.images.length}
-            className="artistProfilePicture"
+            className="artistProfilePictureAH"
           />
           <Typography variant="h5" fontWeight="bold" mt={4} ml={3}>
             <Link to={`/artist/${artistId}`}>{artistInfo?.name}</Link>
