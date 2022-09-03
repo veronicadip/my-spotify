@@ -1,7 +1,8 @@
-
-.artistProfilePicture {
+.artistProfilePictureARH {
   border-radius: 50%;
-  width: 210px;
+  width: 260px;
+  height: 260px;
+  object-fit: cover;
   margin: 10px;
 }
 .topTrackCover {
@@ -13,4 +14,3 @@
 .singleCover {
   width: 250px;
 }
-

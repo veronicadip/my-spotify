@@ -118,13 +118,13 @@ const SongHome: FunctionComponent<SongHomeProps> = ({ playSongHandler }) => {
             imagesArray={songInfo?.album.images.length}
           />
           <Box>
-          <Typography variant="h3" ml={10} mt={4} fontWeight="bold">{songInfo?.name}</Typography>
-          <Box ml={10} mt={10}>
-          {renderButton()}
-          </Box>
+            <Typography variant="h3" ml={10} mt={4} fontWeight="bold">{songInfo?.name}</Typography>
+            <Box ml={10} mt={10}>
+              {renderButton()}
+            </Box>
           </Box>
         </Box>
-        
+
         <Typography variant="subtitle1" mt={3}>
           <Link to={`/artist/${artistId}/album/${albumId}`}>More of: {songInfo?.album.name}</Link>
         </Typography>
@@ -134,7 +134,7 @@ const SongHome: FunctionComponent<SongHomeProps> = ({ playSongHandler }) => {
             fallback={artistPictureFallback}
             alt={`${songArtist?.name} profile picture`}
             imagesArray={songArtist?.images.length}
-            className="artistProfilePicture" />
+            className="artistProfilePictureSH" />
           <Typography variant="h5" fontWeight="bold" mt={4} ml={3}>
             <Link to={`/artist/${artistId}`}>
               {songInfo?.artists.at(0)?.name}

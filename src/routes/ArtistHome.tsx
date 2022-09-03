@@ -99,7 +99,7 @@ function ArtistHome() {
             src={artistInfo?.images.at(1)?.url}
             fallback={artistPictureFallback}
             alt={`${artistInfo?.name} profile picture`}
-            className="artistProfilePicture"
+            className="artistProfilePictureARH"
             imagesArray={artistInfo?.images.length}
           />
           <Grid item m={4}>
