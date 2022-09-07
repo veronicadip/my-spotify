@@ -2,6 +2,7 @@ import ArtistHome from "./ArtistHome";
 import { renderWithRouter, artist, tracks, albums } from "../testUtils";
 import { act } from "react-dom/test-utils";
 import { screen } from "@testing-library/dom";
+import WrappedArtistHome from "./WrappedArtistHome";
 
 const mockGetArtistAlbums = jest.fn();
 const mockGetArtist = jest.fn();
@@ -26,7 +27,7 @@ describe("<ArtistHome>", function () {
             items: albums
         })
         await act(async () => {
-            await renderWithRouter(<ArtistHome />, { route: "/artist/:artistId" })
+            await renderWithRouter(<WrappedArtistHome />, { route: "/artist/:artistId" })
         })
     })
 
@@ -37,7 +38,7 @@ describe("<ArtistHome>", function () {
             items: albums
         })
         await act(async () => {
-            await renderWithRouter(<ArtistHome />, { route: "/artist/:artistId" })
+            await renderWithRouter(<WrappedArtistHome />, { route: "/artist/:artistId" })
         })
         screen.getByText(/There was an error loading the data, please try again./i)
     })
@@ -49,7 +50,7 @@ describe("<ArtistHome>", function () {
             items: albums
         })
         await act(async () => {
-            await renderWithRouter(<ArtistHome />, { route: "/artist/:artistId" })
+            await renderWithRouter(<WrappedArtistHome />, { route: "/artist/:artistId" })
         })
         screen.getByText(/There was an error loading the data, please try again./i)
     })
@@ -60,7 +61,7 @@ describe("<ArtistHome>", function () {
         mockGetArtistAlbums.mockRejectedValue({})
 
         await act(async () => {
-            await renderWithRouter(<ArtistHome />, { route: "/artist/:artistId" })
+            await renderWithRouter(<WrappedArtistHome />, { route: "/artist/:artistId" })
         })
         screen.getByText(/There was an error loading the data, please try again./i)
     })
@@ -71,7 +72,7 @@ describe("<ArtistHome>", function () {
         mockGetArtistAlbums.mockReturnValue(new Promise(() => { }))
 
         await act(async () => {
-            await renderWithRouter(<ArtistHome />, { route: "/artist/:artistId" })
+            await renderWithRouter(<WrappedArtistHome />, { route: "/artist/:artistId" })
         })
         screen.getByRole("progressbar")
     })
@@ -84,7 +85,7 @@ describe("<ArtistHome>", function () {
         })
 
         await act(async () => {
-            await renderWithRouter(<ArtistHome />, { route: "/artist/:artistId" })
+            await renderWithRouter(<WrappedArtistHome />, { route: "/artist/:artistId" })
         })
         screen.getByText(/Harry Styles/i)
         screen.getByText(/As It Was/i)
