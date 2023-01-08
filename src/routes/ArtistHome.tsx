@@ -147,6 +147,8 @@ function ArtistHome() {
         <Container maxWidth="xl">
           {renderArtistHome()}
         </Container>
+        <div><h1>EJEMPLO ROLLING</h1>
+        </div>
       </div>
     </div>
   );
