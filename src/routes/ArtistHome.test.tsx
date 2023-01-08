@@ -1,4 +1,3 @@
-import ArtistHome from "./ArtistHome";
 import { renderWithRouter, artist, tracks, albums } from "../testUtils";
 import { act } from "react-dom/test-utils";
 import { screen } from "@testing-library/dom";
