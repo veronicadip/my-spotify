@@ -8,7 +8,8 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import WrappedSongHome from "./routes/WrappedSongHome";
 import NotFound from "./routes/NotFound";
 import { Layout } from "./routes/FooterLayout";
-import { CssBaseline } from "@mui/material"
+import { CssBaseline } from "@mui/material";
+import WrappedArtistHome from "./routes/WrappedArtistHome"
 
 const darkTheme = createTheme({
   palette: {
@@ -26,7 +27,7 @@ root.render(
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/artist/:artistId" element={<ArtistHome />} />
+          <Route path="/artist/:artistId" element={<WrappedArtistHome />} />
           <Route
             path="/artist/:artistId/album/:albumId/song/:songId"
             element={<WrappedSongHome />}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { SpotifyWebApi } from "spotify-web-api-ts";
 import currentAccessToken from "../lib/accessToken";
 import { Artist, Track } from "spotify-web-api-ts/types/types/SpotifyObjects";
@@ -21,7 +21,10 @@ type ArtistHomeParams = {
   artistId: string;
 };
 
-function ArtistHome() {
+type ArtistHomeProps = {
+  playSongHandler: (url: string | undefined) => void
+}
+const ArtistHome: FunctionComponent<ArtistHomeProps> = ({ playSongHandler }) => {
   const params = useParams() as ArtistHomeParams;
   const artistId = params.artistId;
   const [artistInfo, setArtistInfo] = useState<Artist>();
